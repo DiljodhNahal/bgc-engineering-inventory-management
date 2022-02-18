@@ -1,45 +1,49 @@
-# React application with Express server
+CMPT 276 Final Project Proposal (Project 8)
+<!-- ABOUT THE PROJECT -->
+## Name of Application: 
+BGC Engineering Inventory System
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory. The server is proxied via the `proxy` key in `package.json`.
+## Problem: 
+The problem is regarding not being able to manage inventory efficiently 
+as the amount of equipment and employees are abundant.
 
-## Using this project
+## How is this problem being solved currently: 
+BGC Engineering is currently using a mobile app to scan in & out barcodes 
+and manually track equipment items. They felt that the app they are currently 
+using is not suited towards their needs.
 
-1. Clone the project, change into the directory and install the dependencies.
+## How will our project solve their problem: 
+This project will allow employees at BGC Engineering to efficiently scan 
+and sign out information, manage inventory, and locate equipment across their 
+various locations around the world. 
 
-   ```bash
-   git clone https://github.com/philnash/react-express-starter.git
-   cd react-express-starter
-   npm install
-   ```
+## Who is the target audience: 
+This project will be used by BGC Engineering professionals.
 
-2. Create a `.env` file for environment variables in your server.
+## Features of Applications:
+The main feature of this application is a barcode scanning functionality. 
+The application must be able to declare an item lost and update the status of the item 
+whether it’s found or not. In addition, if the barcode is not able to be scanned, the 
+application must add the item by use of the barcode number. There are also other individual 
+features that are a part of the application. This application has to register items with 
+associated users that will be responsible for that piece of equipment. For instance, this 
+application must be able to perform CRUD operations on the inventory that is scanned in or 
+out of the system. Another feature of this application is the ability of login using different 
+credentials such as system admin, basic user, and equipment manager. This application also must
+be able to display all inventory whether it’s filtered by location or item.  At last, this 
+application must also be able to send out emails whether it’s for returning an item or extending 
+an item’s return period.
 
-   ```bash
-   touch .env
-   ```
+## Which external API is this project using?:
+This application will use the Google Map API to visually showcase where the equipment is currently 
+as compared to the user’s location.
 
-3. Start the server
+## Is the amount of work required in this proposal enough for five group members?:
+Yes, every member of the group believes this amount of work is reasonable.
 
-   You can start the server on its own with the command:
-
-   ```bash
-   npm run server
-   ```
-
-   Run the React application on its own with the command:
-
-   ```bash
-   npm start
-   ```
-
-   Run both applications together with the command:
-
-   ```bash
-   npm run dev
-   ```
-
-   The React application will run on port 3000 and the server port 3001.
-
-## React Twilio starter
-
-The [twilio branch](https://github.com/philnash/react-express-starter/tree/twilio) is a similar setup but also provides endpoints with basic [Access Tokens](https://www.twilio.com/docs/iam/access-tokens) for [Twilio Programmable Chat](https://www.twilio.com/docs/chat) and [Twilio Programmable Video](https://www.twilio.com/docs/video). You can use the project as a base for building React chat or video applications.
+## Contact Information of Group Members
+Diljodh Nahal (dsn5@sfu.ca)
+Ajaipaul Cheema (aca242@sfu.ca)
+Mohammad Haris Ahmad (mha149@sfu.ca)
+Inderpreet Rangi (Isr@sfu.ca)
+Tanjodh Hayer (tsh7@sfu.ca)
