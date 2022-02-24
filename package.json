@@ -3,17 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-pg-migrate": "^6.2.1",
+    "path": "^0.12.7",
+    "pg": "^8.7.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "^3.4.0"
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "^3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node-env-run server --exec nodemon | pino-colada",
-    "dev": "run-p server start"
+    "server": "nodemon server/index.js",
+    "dev": "run-p server start",
+    "migrate": "node-pg-migrate"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
