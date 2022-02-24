@@ -1,14 +1,21 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
+import './styles/Main.css'
+
 const Layout = () => {
 
     return (
         <div>
-            <p>
-                Layout.js
-            </p>
-            <Outlet />
+
+            <header id={'navigationContainer'}>
+
+            </header>
+
+            <div id={'contentContainer'}>
+                <Outlet />
+            </div>
+
         </div>
     )
 }

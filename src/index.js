@@ -3,20 +3,24 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Layout from './Layout'
-import Test from './pages/test'
-import Test2 from './pages/test2'
+import Home from './pages/Home'
+import Search from './pages/Search'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<Test />} />
-                    <Route path="login" element={<Test2 />} />
+                    <Route index element={<Home />} />
+                    <Route path={"search"} element={<Search />} />
+                    <Route path={"dashboard"} element={<Dashboard />} />
                 </Route>
             </Routes>
         </BrowserRouter>
-    );
+    )
+
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"))
