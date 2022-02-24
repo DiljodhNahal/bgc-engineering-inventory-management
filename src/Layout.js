@@ -8,12 +8,18 @@ const Layout = () => {
     return (
         <div>
 
-            <header id={'navigationContainer'}>
+            <div className={'outer'}>
 
-            </header>
+                <div className={'navigationContainer'}>
 
-            <div id={'contentContainer'}>
-                <Outlet />
+                </div>
+
+                <div className={'contentContainer'}>
+
+                    <Outlet />
+
+                </div>
+
             </div>
 
         </div>

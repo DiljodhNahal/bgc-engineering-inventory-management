@@ -1,21 +1,25 @@
+:root {
+}
+
 body {
     padding: 0;
     margin: 0;
-    background-image: url("https://i.imgur.com/y0wiztx.jpg");
+    background-color: rgba(20, 99, 197, 0.2); /* Tint color */
+    background-blend-mode: multiply;
+    background-image: url("../assets/images/hero.jpg");
+    background-repeat: no-repeat;
 }
 
-#navigationContainer {
+.navigationContainer {
     background-color: red;
-    width: 100vw;
     height: 6vh;
 }
 
-#contentContainer {
+.contentContainer {
+    margin-top: 35vh;
     background-color: white;
-    width: 100vw;
-    height: 60vh;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    padding: 16px;
+    height: 100%;
+    min-height: 55.5vh;
 }
+
