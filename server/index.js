@@ -49,7 +49,11 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
                 queryString += ` SIMILARITY(name, '${value}') > 0.4`
             } else {
                 // Add Key To Query String
-                queryString += ` ${key} ilike`
+                if (key === 'id') {
+                    queryString += ` ${key} =`
+                } else {
+                    queryString += ` ${key} ilike`
+                }
 
                 // Add Value To Query String
                 if (Number.isInteger(value)) {
