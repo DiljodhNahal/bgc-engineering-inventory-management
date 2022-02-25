@@ -8,7 +8,7 @@ exports.up = pgm => {
     // For UUID's
     pgm.createExtension("uuid-ossp", {
         ifNotExists: true
-    });
+    })
 
     // Create Equipment Table
     pgm.createTable('equipment', {
