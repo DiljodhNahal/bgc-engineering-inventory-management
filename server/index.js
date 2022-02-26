@@ -4,7 +4,6 @@ const path = require('path')
 const pino = require('express-pino-logger')()
 
 require('dotenv').config()
-
 const app = express()
 
 const { Pool } = require('pg')
