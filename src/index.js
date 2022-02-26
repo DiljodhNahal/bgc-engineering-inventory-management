@@ -6,6 +6,7 @@ import Layout from './Layout'
 import Home from './pages/Home'
 import Search from './pages/Search'
 import Dashboard from './pages/Dashboard'
+import Auth from './pages/Auth'
 
 export default function App() {
 
@@ -16,6 +17,7 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path={"search"} element={<Search />} />
                     <Route path={"dashboard"} element={<Dashboard />} />
+                    <Route path={"auth"} element={<Auth />} />
                 </Route>
             </Routes>
         </BrowserRouter>
