@@ -1,7 +1,18 @@
 :root {
+    --primary: #010080;
+    --select: #2323c9;
+    --dark: #101010;
+
+}
+
+/* Layout */
+html {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 body {
+    font-family: 'Montserrat', serif;
     padding: 0;
     margin: 0;
     background-color: rgba(20, 99, 197, 0.2); /* Tint color */
@@ -10,16 +21,14 @@ body {
     background-repeat: no-repeat;
 }
 
-.navigationContainer {
-    background-color: red;
-    height: 6vh;
-}
-
 .contentContainer {
-    margin-top: 35vh;
+    display: flex;
+    flex-wrap: nowrap;
     background-color: white;
     padding: 16px;
+    width: 100vw;
+    margin-top: 35vh;
+    min-height: 60vh;
     height: 100%;
-    min-height: 55.5vh;
+    box-shadow: 0 1px 10px #999;
 }
-

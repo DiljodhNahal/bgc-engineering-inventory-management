@@ -1,0 +1,90 @@
+.navigationBar {
+    background-color: var(--primary);
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16vw;
+}
+
+.logo {
+    height: 88px;
+}
+
+.navigationMenu {
+    height: 100%;
+}
+
+.navigationMenu ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navigationMenu li {
+    list-style: none;
+    height: 100%;
+    background-color: var(--primary);
+
+}
+
+.navigationMenu li a {
+    text-decoration: none;
+    display: block;
+    color: white;
+    padding: 20px;
+}
+
+.navigationMenu li:hover {
+    background-color: var(--select);
+}
+
+.menuButton {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    right: 8vw;
+    top: 4vh;
+}
+
+.currentLocation {
+    background-color: var(--select);
+}
+
+
+@media (max-width: 760px) {
+
+    .navigationBar {
+        padding: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navigationMenu {
+        background-color: var(--primary);
+        position: absolute;
+        display: none;
+        width: 100%;
+        bottom: -90px;
+        z-index: 1;
+    }
+
+    .navigationMenu ul {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .menuButton {
+        display: flex;
+    }
+
+    .active {
+        display: flex !important;
+    }
+
+    .logoContainer {
+        margin-left: 8vw;
+    }
+
+}

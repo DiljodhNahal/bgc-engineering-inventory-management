@@ -1,24 +1,19 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet} from 'react-router-dom'
 
 import './styles/Main.css'
+import Navbar from './components/Navbar'
 
 const Layout = () => {
 
     return (
         <div>
 
-            <div className={'outer'}>
+            <Navbar />
 
-                <div className={'navigationContainer'}>
+            <div className={'contentContainer'}>
 
-                </div>
-
-                <div className={'contentContainer'}>
-
-                    <Outlet />
-
-                </div>
+                <Outlet />
 
             </div>
 

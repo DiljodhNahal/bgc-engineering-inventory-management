@@ -25,7 +25,7 @@ const asyncHandler = fn => (req, res, next) => {
     return Promise
         .resolve(fn(req, res, next))
         .catch(next);
-};
+}
 
 // Endpoints
 app.get('/api/search', asyncHandler(async (req, res, next) => {
@@ -49,7 +49,11 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
                 queryString += ` SIMILARITY(name, '${value}') > 0.4`
             } else {
                 // Add Key To Query String
-                queryString += ` ${key} ilike`
+                if (key === 'id') {
+                    queryString += ` ${key} =`
+                } else {
+                    queryString += ` ${key} ilike`
+                }
 
                 // Add Value To Query String
                 if (Number.isInteger(value)) {
@@ -78,6 +82,7 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
     }
 
 }))
+
 
 // Global Error Handling
 app.use(function (err, req, res, next) {
