@@ -9,7 +9,7 @@ exports.up = pgm => {
     pgm.createExtension("uuid-ossp", {
         ifNotExists: true
     })
-
+    
     // Create Equipment Table
     pgm.createTable('equipment', {
         id: { type: 'uuid', primaryKey: true, default: new PgLiteral('uuid_generate_v4()'), notNull: true },

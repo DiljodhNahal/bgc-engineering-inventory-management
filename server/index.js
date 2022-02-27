@@ -83,6 +83,12 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
 
 }))
 
+// Checking User Data From Sign Up
+app.post("./pages/signup", (req, res) =>{
+    let { email, password } = req.body
+    
+})
+
 // Global Error Handling
 app.use(function (err, req, res, next) {
     res.status(500).send(err.message)
