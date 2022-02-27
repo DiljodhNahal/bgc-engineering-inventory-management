@@ -83,12 +83,6 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
 
 }))
 
-
-// Making a cookie
-app.use(session({
-    
-}))
-
 // Global Error Handling
 app.use(function (err, req, res, next) {
     res.status(500).send(err.message)
