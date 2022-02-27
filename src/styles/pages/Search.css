@@ -1,0 +1,14 @@
+.searchPage {
+    width: 100%;
+    min-width: 64vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.resultsContainer {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}

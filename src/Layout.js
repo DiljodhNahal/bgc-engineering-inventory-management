@@ -13,7 +13,11 @@ const Layout = () => {
 
             <div className={'contentContainer'}>
 
-                <Outlet />
+                <div className={'content'}>
+
+                    <Outlet />
+
+                </div>
 
             </div>
 

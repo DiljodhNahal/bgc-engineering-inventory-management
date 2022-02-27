@@ -1,0 +1,28 @@
+.resultCol {
+    padding: 12px;
+    box-sizing: border-box;
+    flex: 30%;
+    max-width: 30%;
+}
+
+.searchResult {
+    height: 300px;
+    box-shadow: 0 1px 10px #999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 0;
+}
+
+.searchResult:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+@media (max-width: 780px) {
+    .resultCol {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
