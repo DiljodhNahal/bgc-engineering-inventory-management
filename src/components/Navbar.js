@@ -27,6 +27,7 @@ const Navbar = () => {
                     <li><a href={'/'} className={`${useLocation().pathname === '/' && 'currentLocation'}`}>Home</a></li>
                     <li><a href={'/search'} className={`${useLocation().pathname === '/search' && 'currentLocation'}`}>Search</a></li>
                     <li><a href={'/dashboard'} className={`${useLocation().pathname === '/dashboard' && 'currentLocation'}`}>Dashboard</a></li>
+                    <li><a href={'/auth'} className={`${useLocation().pathname === '/auth' && 'currentLocation'}`}>Log In</a></li>
 
                 </ul>
 

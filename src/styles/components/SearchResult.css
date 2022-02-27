@@ -3,10 +3,13 @@
     box-sizing: border-box;
     flex: 30%;
     max-width: 30%;
+    display: flex;
+    justify-content: center;
 }
 
 .searchResult {
     height: 300px;
+    max-width: 400px;
     box-shadow: 0 1px 10px #999;
     overflow: hidden;
     display: flex;
