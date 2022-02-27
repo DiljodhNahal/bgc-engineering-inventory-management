@@ -1,14 +1,12 @@
-.btn-group-top{
-    width: 100%;
-}
-
-.btn-group-bot{
+.btn-group{
     width: 100%;
 }
 
 .btn-container{
     width: 100%;
     min-width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 
