@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/components/Navbar.css'
 import { useLocation } from 'react-router-dom'
-import { MdMenu } from 'react-icons/all'
+import { MdMenu } from 'react-icons/md'
 import Logo from '../assets/images/bgc_logo.png'
 
 
