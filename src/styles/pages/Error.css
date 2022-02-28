@@ -1,0 +1,29 @@
+.errorBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.errorContent {
+    width: 35vw;
+    height: 65vh;
+    background-color: white;
+    border-radius: 100px;
+    box-shadow: 0 1px 10px #999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 64px;
+}
+
+.errorCode {
+    font-size: 128px;
+}
+
+@media (max-width: 780px) {
+    .errorContent {
+        width: 100vw
+    }
+}
