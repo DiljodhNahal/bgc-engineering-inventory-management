@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.6",
@@ -10,6 +11,7 @@
     "dotenv": "^16.0.0",
     "express-session": "^1.17.2",
     "node-pg-migrate": "^6.2.1",
+    "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "passport-openidconnect": "^0.1.1",
     "path": "^0.12.7",

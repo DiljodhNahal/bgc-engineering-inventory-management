@@ -1,17 +1,21 @@
 const express = require('express')
+const pool = require('./db')
 const bodyParser = require('body-parser')
 const path = require('path')
 const pino = require('express-pino-logger')()
+const bcrypt = require("bcrypt")
+const passport = require("passport");
+const initializePassport = require('./loginConfig')
+const session = require('express-session')
+const { Cookie } = require('express-session')
 
 require('dotenv').config()
 
 const app = express()
 
-const { Pool } = require('pg')
+//import pool from './db'
 
-let pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
+initializePassport(passport)
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,6 +23,17 @@ app.use(pino)
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.set('views', path.join(__dirname, 'src/pages'))
+
+app.use(
+    session({
+        secret: 'hidden',
+        resave: false,
+        saveUninitialized: false
+    })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Global Error Handling
 const asyncHandler = fn => (req, res, next) => {
@@ -28,7 +43,7 @@ const asyncHandler = fn => (req, res, next) => {
 }
 
 // Endpoints
-app.get('/api/search', asyncHandler(async (req, res, next) => {
+app.get('/api/search', asyncHandler(async (req, res) => {
 
     try {
         // Build SQL String
@@ -83,11 +98,70 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
 
 }))
 
-// Checking User Data From Sign Up
-app.post("./pages/signup", (req, res) =>{
-    let { email, password } = req.body
-    
-})
+app.post('/api/signuppage', asyncHandler(async (req, res) => {
+
+    try {
+        let { email, password } = req.body
+        let queryString = `SELECT * FROM users WHERE email = $1`
+        
+        // Salt To Be Used With Password
+        const SALT = 16
+        let validiations = []
+
+        // Hashing The Password Entered
+        let hashedPassword = await bcrypt.hash(password, SALT)
+
+        pool.query(
+            queryString, [email], (err, results) => {
+                let queryInsertString = `INSERT INTO users(email, password, accountType) VALUES($1, $2, $3) RETURNING id, password`
+
+                if(err){
+                    throw err
+                } 
+                
+                // Email Exists
+                if(results.rows.length > 0){
+                    validiations.push({message: 'Email is taken'})
+                    res.render('/signuppage', { validiations })
+                }
+
+                // Now Register User
+                pool.query(
+                    queryInsertString,[email, hashedPassword, 2], (err, results) => {
+                        if(err){
+                            throw err
+                        }
+                        res.redirect('/loginpage')
+                    }
+                )
+            }
+        )
+    } catch (exception) {
+        throw new Error(exception.message)
+    }
+}))
+
+app.post('/api/loginpage', passport.authenticate('local', {
+    successRedirect: '/USERS/DASHBOARDPAGE',
+    failureRedirect: '/USERS/LOGINPAGE'
+}))
+
+// Checks If User Is Logged In
+const checkLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()){
+        return res.redirect('/USERS/DASHBOARD')
+    }
+    next()
+}
+
+// User Is Not Logged In
+const checkNotLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()){
+        return next()
+    } else {
+        res.redirect('/USERS/LOGIN')
+    }
+}
 
 // Global Error Handling
 app.use(function (err, req, res, next) {
