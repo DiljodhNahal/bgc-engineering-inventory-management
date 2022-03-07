@@ -15,7 +15,7 @@ const Auth = () => {
 
         let body = {password: password}
         if (accountType === 1)
-            body.email = email
+            body.username = email
 
         fetch(`/api/auth`, {
             method: 'post',
@@ -24,8 +24,9 @@ const Auth = () => {
             },
             body: JSON.stringify(body)
         }).then(response => {
-            // Haris continues here
-            console.log(response)
+            if(response.redirected){
+                window.location.replace(response.url)
+            }
         })
 
     }
