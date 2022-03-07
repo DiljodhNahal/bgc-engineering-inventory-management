@@ -28,7 +28,19 @@ const SignUp = () => {
             return  // Add Alert Here
 
         // Create
-
+        fetch(`/api/signup`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+            .then(response => {
+                console.log(response)
+            })
     }
 
     return (
@@ -47,7 +59,7 @@ const SignUp = () => {
                                 placeholder={'Email'}
                                 required
                             />
-                            <br/>
+                            <br />
                             <input
                                 type={'password'}
                                 id={'password'}
@@ -56,7 +68,7 @@ const SignUp = () => {
                                 placeholder={'Password'}
                                 required
                             />
-                            <br/>
+                            <br />
                             <input
                                 type={'password'}
                                 id={'confirmPassword'}
@@ -65,14 +77,14 @@ const SignUp = () => {
                                 placeholder={'Confirm Password'}
                                 required
                             />
-                            <br/>
+                            <br />
                             <Button onClick={create}>Create</Button>
                         </form>
                     }
                     handleClose={toggleModal}
                 />
             }
-            
+
             <h2>Create New Account</h2>
 
             <select value={accountType} onChange={updateAccountType}>
