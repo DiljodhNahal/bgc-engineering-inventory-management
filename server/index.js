@@ -26,7 +26,10 @@ app.use(
     session({
         secret: 'hidden',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            secure: false
+        }
     })
 )
 
@@ -171,18 +174,14 @@ app.post(
 
 // Checks If User Is Logged In
 app.get('/api/autheticated', asyncHandler(async (req, res) => {
-    console.log(req.isAuthenticated())
-    return req.isAuthenticated()
-}))
-
-// User Is Not Logged In
-const isLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next()
-    } else {
-        res.redirect('/api/auth')
+    let response = {
+        status: req.isAuthenticated()
     }
-}
+    if (req.isAuthenticated())
+        response.user = req.user
+
+    res.send(response)
+}))
 
 // Global Error Handling
 app.use(function (err, req, res, next) {
