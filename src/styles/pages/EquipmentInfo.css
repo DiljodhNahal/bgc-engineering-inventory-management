@@ -11,7 +11,6 @@ li{
 p{
     height: 150px;
     width: 375px;
-    overflow-y: auto;
 
 }
 
@@ -25,27 +24,27 @@ p{
     padding-left: 20px;
 }
 #boxOne{
-    text-align: center;
+    text-align: left;
     margin: 10px;
 }
 #boxTwo{
-    text-align: center;
+    text-align: left;
     margin: 10px;
 }
 #boxThree{
-    text-align: center;
+    text-align: left;
     padding-left: 20px;
     margin: 10px;
 }
 #boxFour{
     
-    text-align: center;
+    text-align: left;
     padding-left: 20px;
     margin: 10px;
     
 }
 .camera{
-    margin-top: 2.1%;
+    margin-top: 5%;
     margin-left: 15%;
     max-width:30%;
     min-width: 30%;
@@ -61,7 +60,9 @@ p{
     } 
 }
 
-
+#serial{
+    padding-left: 39px;
+}
 
 .group{
     text-align: center;
