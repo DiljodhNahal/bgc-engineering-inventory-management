@@ -13,22 +13,23 @@ require('dotenv').config()
 
 const app = express()
 
-//import pool from './db'
-
 initializePassport(passport)
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(pino)
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.set('views', path.join(__dirname, 'src/pages'))
 
 app.use(
     session({
         secret: 'hidden',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            secure: false
+        }
     })
 )
 
@@ -89,7 +90,7 @@ app.get('/api/search', asyncHandler(async (req, res) => {
         let results = await pool.query(queryString)
 
         // Build Response
-        let response = {count: results.rowCount, results: results.rows}
+        let response = { count: results.rowCount, results: results.rows }
 
         res.send(response)
     } catch (exception) {
@@ -98,70 +99,89 @@ app.get('/api/search', asyncHandler(async (req, res) => {
 
 }))
 
-app.post('/api/signuppage', asyncHandler(async (req, res) => {
+app.post('/api/signup', asyncHandler(async (req, res) => {
 
     try {
         let { email, password } = req.body
+
         let queryString = `SELECT * FROM users WHERE email = $1`
-        
+        let response
+
         // Salt To Be Used With Password
         const SALT = 16
-        let validiations = []
 
         // Hashing The Password Entered
-        let hashedPassword = await bcrypt.hash(password, SALT)
-
-        pool.query(
-            queryString, [email], (err, results) => {
-                let queryInsertString = `INSERT INTO users(email, password, accountType) VALUES($1, $2, $3) RETURNING id, password`
-
-                if(err){
-                    throw err
-                } 
-                
-                // Email Exists
-                if(results.rows.length > 0){
-                    validiations.push({message: 'Email is taken'})
-                    res.render('/signuppage', { validiations })
-                }
-
-                // Now Register User
-                pool.query(
-                    queryInsertString,[email, hashedPassword, 2], (err, results) => {
-                        if(err){
-                            throw err
-                        }
-                        res.redirect('/loginpage')
-                    }
-                )
+        bcrypt.hash(password, SALT, (err, hash) => {
+            if (err) {
+                res.status(500).send('An Unexpected Error Occurred')
+                return
             }
-        )
+            pool.query(
+                queryString, [email], (err, results) => {
+                    let queryInsertString = `INSERT INTO users("email", "password", "accountType") VALUES($1, $2, $3) RETURNING id, password`
+
+                    if (err) {
+                        res.status(500).send('An Unexpected Error Occurred')
+                        return
+                    }
+
+                    // Email Exists
+                    if (results.rows.length > 0) {
+                        res.status(409).send('Email Already Exists')
+                        return
+                    }
+
+                    // Now Register User
+                    pool.query(
+                        queryInsertString, [email, hash, 2], (err, result) => {
+                            if (err) {
+                                response = { message: 'An Unexpected Error Occurred', status: 500 }
+                                res.send(response)
+                                return
+                            }
+                            res.status(201).send('Account Created')
+                        }
+                    )
+                }
+            )
+        })
+
     } catch (exception) {
+        console.log(exception)
         throw new Error(exception.message)
     }
 }))
 
-app.post('/api/loginpage', passport.authenticate('local', {
-    successRedirect: '/USERS/DASHBOARDPAGE',
-    failureRedirect: '/USERS/LOGINPAGE'
-}))
+/*
+app.post('/api/auth', passport.authenticate('local'), (req, res, next) => {
+    try{
+        console.log(req)
+        console.log(res)
+        res.redirect('/')
+    } catch (exception){
+        console.log(exception)
+    }
+})
+*/
+
+app.post(
+    "/api/auth",
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/auth",
+    })
+  );
 
 // Checks If User Is Logged In
-const checkLoggedIn = (req, res, next) => {
-    if(req.isAuthenticated()){
-        return res.redirect('/USERS/DASHBOARD')
+app.get('/api/autheticated', asyncHandler(async (req, res) => {
+    let response = {
+        status: req.isAuthenticated()
     }
-    next()
-}
+    if (req.isAuthenticated())
+        response.user = req.user
 
-// User Is Not Logged In
-const checkNotLoggedIn = (req, res, next) => {
-    if(req.isAuthenticated()){
-        return next()
-    } else {
-        res.redirect('/USERS/LOGIN')
-    }
-}
+    res.send(response)
+}))
 
 // Global Error Handling
 app.use(function (err, req, res, next) {
@@ -170,6 +190,6 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
+    console.log('Express server is running on localhost:3001')
 )
 

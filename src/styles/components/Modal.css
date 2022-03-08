@@ -6,10 +6,15 @@
 
 .email{
     font-size: 20px;
+    margin: 16px;
+    width: 60%;
 }
 
 .password {
     font-size: 20px;
+    margin: 16px;
+    width: 60%;
+
 }
 
 .signin-popup {
@@ -23,35 +28,32 @@
 
 .popup {
     position: relative;
-    overflow: auto;
-    text-align: center;
-    background: #fff;
-    color: #010080;
-    margin: 0 auto;
-    margin-top: 7em;
-    height: auto;
-    max-height: 70vh;
-    width: 50%;
-    border-radius: 4px;
-    padding: 30px;
-    font-size: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: white;
+    width: 75%;
+    margin: 10% auto;
+}
+
+.modalContent {
+    padding: 32px;
 }
 
 .discard {
+    position: absolute;
     cursor: pointer;
-    text-align: center;
-    line-height: 20px;
-    background: #010080;
-    border: 5px solid white;
+    background-color: var(--primary);
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
-    top: 13.5em;
-    width: 25px;
-    height: 25px;
-    position: fixed;
-    right: calc(24.5% - 35px);
-    border-radius: 50%;
-    font-size: 20px;
+    font-size: 24px;
+    top: -15px;
+    right: -15px;
+    border: white solid 3px;
+}
+
+.discard:hover {
+    background-color: var(--select);
 }

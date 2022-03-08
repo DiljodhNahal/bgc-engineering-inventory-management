@@ -5,114 +5,95 @@ import '../styles/pages/SignUp.css'
 
 const SignUp = () => {
 
+    const [accountType, setAccountType] = useState(1)
+    const [modalStatus, setModalStatus] = useState(false)
 
-    const [employeeState, setState] = useState("Employee");
-    const [openModal, setOpenModal] = useState(false);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
 
-    const toggleClose = () => {
-        setOpenModal(!openModal);
+    const updateAccountType = (event) => {
+        setAccountType(event.target.value)
     }
-    
 
-    function confirmEmail() {
-        var email = document.getElementById('email').value
-        var confirm = document.getElementById('confirm').value
-        if(email != confirm) {
-            alert('Email Not Matching, please enter the correct email.');
-        }
+    const toggleModal = () => {
+        setModalStatus(!modalStatus)
+    }
+
+    const create = () => {
+
+        // Confirm Passwords
+        if (password !== confirmPassword)
+            return  // Add Alert Here
+
+        // Create
+        fetch(`/api/signup`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+            .then(response => {
+                console.log(response)
+            })
     }
 
     return (
-        <div>
-            
-            <p>Choose Employee Type</p>
-            
-            <select className={'roles'} name="Roles" value={employeeState} onChange={(e)=>{
-                const selectedRole = e.target.value;
-                setState(selectedRole);
-            }}>
-                <option value="Employee">Employee</option>
-                <option value="Manager">Equipment Manager</option>
-                <option value="Admin">Admin</option>
+        <div id={'createEmployeeBody'}>
+
+            {modalStatus &&
+                <Modal
+                    content={
+                        <form className={'createForm'}>
+                            <h3>Create {accountType === 1 ? "Equipment Manager" : "Administrator"}</h3>
+                            <input
+                                type={'email'}
+                                className={'email'}
+                                id={'email'}
+                                onChange={event => setEmail(event.target.value)}
+                                placeholder={'Email'}
+                                required
+                            />
+                            <br />
+                            <input
+                                type={'password'}
+                                id={'password'}
+                                className={'password'}
+                                onChange={event => setPassword(event.target.value)}
+                                placeholder={'Password'}
+                                required
+                            />
+                            <br />
+                            <input
+                                type={'password'}
+                                id={'confirmPassword'}
+                                className={'password'}
+                                onChange={event => setConfirmPassword(event.target.value)}
+                                placeholder={'Confirm Password'}
+                                required
+                            />
+                            <br />
+                            <Button onClick={create}>Create</Button>
+                        </form>
+                    }
+                    handleClose={toggleModal}
+                />
+            }
+
+            <h2>Create New Account</h2>
+
+            <select value={accountType} onChange={updateAccountType}>
+                <option value={1}>Equipment Manager</option>
+                <option value={2}>Administrator</option>
             </select>
-            <br></br>
-            <Button size={'small'} onClick={toggleClose}>Sign Up</Button>
-            
-            
-            {employeeState === "Employee" && openModal && <Modal
-                content={<>
-                        <b>Employee</b>
-                        <form>
-                            <h5>Password: xxxxxxxxxx</h5>
-                        </form>
-                    </>}
-                    handleClose={toggleClose}
-            />}
 
+            <Button size={'small'} onClick={toggleModal}>Create Account</Button>
 
-            {employeeState === "Manager" && openModal && <Modal
-                content={<>
-                        <b>Equipment Manager</b>
-                        <form>
-                        <input
-                            type={'email'}
-                            className={'email'}
-                            id={'email'}
-                            placeholder={'Enter Email'}
-                            required
-                        /><br />
-                        <input
-                            type={'email'}
-                            className={'email'}
-                            id={'confirm'}
-                            placeholder={'Confirm Email'}
-                            required
-                        /><br />
-                        <input
-                            type={'password'}
-                            className={'password'}
-                            placeholder={'Enter Password'}
-                            required
-                        /> <br />
-                        <button onClick={confirmEmail}>Create User</button>
-                    </form>
-                    </>}
-                    handleClose={toggleClose}
-            />}
-
-
-            {employeeState === "Admin" && openModal && <Modal
-                content={<>
-                        <b>Admin</b>
-                        <form>
-                        <input
-                            type={'email'}
-                            className={'email'}
-                            id={'email'}
-                            placeholder={'Enter Email'}
-                            required
-                        /><br />
-                        <input
-                            type={'email'}
-                            className={'email'}
-                            id={'confirm'}
-                            placeholder={'Confirm Email'}
-                            required
-                        /><br />
-                        <input
-                            type={'password'}
-                            className={'password'}
-                            placeholder={'Enter Password'}
-                            required
-                        /> <br />
-                        <button onClick={confirmEmail}>Create User</button>
-                        </form>
-                    </>}
-                    handleClose={toggleClose}
-            />}
-            
-        
         </div>
     )
 
