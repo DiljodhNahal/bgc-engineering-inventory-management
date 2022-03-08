@@ -13,7 +13,7 @@ const Dashboard = () => {
         <div>
             <div className={'btn-container'}>
                 <div className={'btn-group'}>
-                    <Button>Create Inventory</Button>
+                <Button onClick={() => navigation('/scan')}>Create Inventory</Button>
                     <Button> Manage Inventory</Button>
                     <Button>Pending Requests</Button>
                 </div>

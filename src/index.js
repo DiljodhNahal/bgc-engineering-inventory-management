@@ -9,6 +9,9 @@ import Dashboard from './pages/Dashboard'
 import Auth from './pages/Auth'
 import SignUp from './pages/SignUp'
 import Error from './pages/Error'
+import Create from './pages/Create'
+import CameraHandler from './components/Camera/Camera'
+import ShowData from './pages/ShowData'
 
 export default function App() {
 
@@ -21,6 +24,9 @@ export default function App() {
                     <Route path={"dashboard"} element={<Dashboard />} />
                     <Route path={"auth"} element={<Auth />} />
                     <Route path={"signup"} element={<SignUp />} />
+                    <Route path={"create"} element={<Create />} />
+                    <Route path={"showData"} element={<ShowData />} />
+                    <Route path={"scan"} element={<CameraHandler />} />
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>
