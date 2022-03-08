@@ -170,6 +170,20 @@ app.get('/api/autheticated', asyncHandler(async (req, res) => {
     res.send(response)
 }))
 
+app.post("/api/upload", async (req, res) => {
+    try {
+        const { name, description, color, serialNumber, price, purchaseDate, barcode } = req.body
+        const newItem = await pool.query(
+            'INSERT INTO equipment (name, description, color, "serialNumber", price, "purchaseDate", barcode) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+            [name, description, color, serialNumber, price, purchaseDate, barcode]
+        )
+        res.json(newItem.rows[0])
+    } catch (err) {
+        console.error(err.message)
+        throw new Error(exception.message)
+    }
+})
+
 // Global Error Handling
 app.use(function (err, req, res, next) {
     res.status(500).send(err.message)
