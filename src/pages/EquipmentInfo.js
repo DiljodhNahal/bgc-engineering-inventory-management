@@ -1,23 +1,24 @@
 import React from 'react'
 import '../styles/pages/EquipmentInfo.css'
 const EquipmentInfo = () => {
+    
 
     return (
                 <div id='mainBox'>
                     
-                            <img className={'camera'} src="https://cdn.thewirecutter.com/wp-content/media/2020/10/beginnerdslr2020-2048px-9793.jpg?auto=webp&quality=60&crop=1.91:1&width=1200" alt="Display" />
+                    <img className={'camera'} src="https://cdn.thewirecutter.com/wp-content/media/2020/10/beginnerdslr2020-2048px-9793.jpg?auto=webp&quality=60&crop=1.91:1&width=1200" alt="Display" />
                     
                     
-                    <div class="group">
+                <div class={"group"}>
                         
                         <ul>
                         <h3>Camera Name</h3>
-                            <div id='boxOne'>
+                            <div id={'boxOne'}>
                             <li className={'one'}><label><strong>Color:</strong></label> Black</li> 
                             <li className={'one'} id='serial'><label><strong>Serial Number:</strong></label> 5437831</li>
                             </div>
 
-                            <div id='boxTwo'>
+                            <div id={'boxTwo'}>
                             <li className={'two'}><label><strong>Price:</strong></label> $300.00</li>
                             <li className={'two'}><label><strong>Purchase Date:</strong></label> 2022-12-6</li>
                             </div>
