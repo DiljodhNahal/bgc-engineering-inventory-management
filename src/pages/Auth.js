@@ -7,24 +7,27 @@ const Auth = () => {
 
     const [accountType, setAccountType] = useState(0)
     const [modalStatus, setModalStatus] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('employee@bgc.ca')
     const [password, setPassword] = useState('')
 
     const login = () => {
 
-        let body = {password: password}
-        if (accountType === 1)
-            body.username = email
+        setLoading(true)
 
         fetch(`/api/auth`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify({ username: email, password: password })
         }).then(response => {
-            if(response.redirected){
+            if (response.status === 404) {
+                setLoading(false)
+                console.log(response)
+                alert('Incorrect Email and/or Password')
+            } else if (response.redirected) {
                 window.location.replace(response.url)
             }
         })
@@ -69,7 +72,7 @@ const Auth = () => {
                             required
                         />
 
-                        <Button onClick={login}>Login</Button>
+                        <Button onClick={login} loading={loading}>Login</Button>
                     </form>
                 }
                 handleClose={toggleModal}

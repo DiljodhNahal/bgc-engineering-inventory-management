@@ -102,7 +102,7 @@ app.get('/api/search', asyncHandler(async (req, res) => {
 app.post('/api/signup', asyncHandler(async (req, res) => {
 
     try {
-        let { email, password } = req.body
+        let { email, password, accountType } = req.body
 
         let queryString = `SELECT * FROM users WHERE email = $1`
         let response
@@ -133,7 +133,7 @@ app.post('/api/signup', asyncHandler(async (req, res) => {
 
                     // Now Register User
                     pool.query(
-                        queryInsertString, [email, hash, 2], (err, result) => {
+                        queryInsertString, [email, hash, accountType], (err, result) => {
                             if (err) {
                                 response = { message: 'An Unexpected Error Occurred', status: 500 }
                                 res.send(response)
@@ -147,22 +147,9 @@ app.post('/api/signup', asyncHandler(async (req, res) => {
         })
 
     } catch (exception) {
-        console.log(exception)
         throw new Error(exception.message)
     }
 }))
-
-/*
-app.post('/api/auth', passport.authenticate('local'), (req, res, next) => {
-    try{
-        console.log(req)
-        console.log(res)
-        res.redirect('/')
-    } catch (exception){
-        console.log(exception)
-    }
-})
-*/
 
 app.post(
     "/api/auth",
@@ -170,7 +157,7 @@ app.post(
       successRedirect: "/",
       failureRedirect: "/auth",
     })
-  );
+  )
 
 // Checks If User Is Logged In
 app.get('/api/autheticated', asyncHandler(async (req, res) => {

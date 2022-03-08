@@ -1,8 +1,9 @@
 import React from 'react'
 
 import '../styles/components/Button.css'
+import { ClipLoader } from 'react-spinners'
 
-const Button = ({ children, onClick, size }) => {
+const Button = ({ children, onClick, size, loading = false }) => {
 
     let sizeClass = 'button-md'
     if (size) {
@@ -16,10 +17,19 @@ const Button = ({ children, onClick, size }) => {
         }
     }
 
+    const getText = () => {
+
+        if (loading === true)
+            return <ClipLoader color={'#ffffff'} loading={true} size={50} />
+
+        return children
+
+    }
+
     return (
 
         <div onClick={onClick} className={`button ${sizeClass}`}>
-            {children}
+            {getText()}
         </div>
 
     )

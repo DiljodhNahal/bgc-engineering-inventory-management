@@ -7,6 +7,7 @@ const SignUp = () => {
 
     const [accountType, setAccountType] = useState(1)
     const [modalStatus, setModalStatus] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -23,6 +24,8 @@ const SignUp = () => {
 
     const create = () => {
 
+        setLoading(true)
+
         // Confirm Passwords
         if (password !== confirmPassword)
             return  // Add Alert Here
@@ -35,12 +38,25 @@ const SignUp = () => {
             },
             body: JSON.stringify({
                 email: email,
-                password: password
+                password: password,
+                accountType: accountType
+
             })
         })
-            .then(response => {
-                console.log(response)
-            })
+        .then(response => {
+            setLoading(false)
+            if (response.status === 500) {
+                alert("An Unexpected Error Has Occurred")
+            } else if (response.status === 409) {
+                alert("An Account With This Email Already Exists")
+            } else {
+                setEmail('')
+                setPassword('')
+                setConfirmPassword('')
+                setModalStatus(false)
+                alert("Account Successfully Created")
+            }
+        })
     }
 
     return (
@@ -55,6 +71,7 @@ const SignUp = () => {
                                 type={'email'}
                                 className={'email'}
                                 id={'email'}
+                                value={email}
                                 onChange={event => setEmail(event.target.value)}
                                 placeholder={'Email'}
                                 required
@@ -64,6 +81,7 @@ const SignUp = () => {
                                 type={'password'}
                                 id={'password'}
                                 className={'password'}
+                                value={password}
                                 onChange={event => setPassword(event.target.value)}
                                 placeholder={'Password'}
                                 required
@@ -73,12 +91,13 @@ const SignUp = () => {
                                 type={'password'}
                                 id={'confirmPassword'}
                                 className={'password'}
+                                value={confirmPassword}
                                 onChange={event => setConfirmPassword(event.target.value)}
                                 placeholder={'Confirm Password'}
                                 required
                             />
                             <br />
-                            <Button onClick={create}>Create</Button>
+                            <Button onClick={create} loading={loading}>Create</Button>
                         </form>
                     }
                     handleClose={toggleModal}
