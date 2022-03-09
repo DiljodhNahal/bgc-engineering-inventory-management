@@ -11,6 +11,7 @@ import SignUp from './pages/SignUp'
 import Error from './pages/Error'
 import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
+import Modal from './components/Modal'
 
 export default function App() {
 

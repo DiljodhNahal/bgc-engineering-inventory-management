@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt")
 const passport = require("passport");
 const initializePassport = require('./loginConfig')
 const session = require('express-session')
-const { Cookie } = require('express-session')
 
 require('dotenv').config()
 
@@ -145,19 +144,17 @@ app.post('/api/signup', asyncHandler(async (req, res) => {
                 }
             )
         })
-
     } catch (exception) {
         throw new Error(exception.message)
     }
 }))
 
-app.post(
-    "/api/auth",
-    passport.authenticate("local", {
+// Validates The User And Redirects Them
+app.post("/api/auth", passport.authenticate("local", {
       successRedirect: "/",
       failureRedirect: "/auth",
     })
-  )
+)
 
 // Checks If User Is Logged In
 app.get('/api/autheticated', asyncHandler(async (req, res) => {
@@ -169,6 +166,14 @@ app.get('/api/autheticated', asyncHandler(async (req, res) => {
 
     res.send(response)
 }))
+
+// Logs Out The User
+app.post('/api/logout', (req, res) => {
+    req.logout()
+    .then(() => {
+        return req.isAuthenticated()
+    })
+})
 
 app.post("/api/upload", async (req, res) => {
     try {

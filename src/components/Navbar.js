@@ -29,6 +29,7 @@ const Navbar = ({ authentication }) => {
                         {authentication.user.accountType !== 0 &&
                             <li><a href={'/dashboard'}>Dashboard</a></li>
                         }
+                        <li><a>Logout</a></li>
                     </ul>
                 }
 
