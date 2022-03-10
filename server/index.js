@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(pino)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+const buildPath = path.join(__dirname, '..', 'build')
+app.use(express.static(buildPath))
 app.set('views', path.join(__dirname, 'src/pages'))
 
 app.use(
