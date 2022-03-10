@@ -3,12 +3,14 @@ import '../styles/components/Modal.css'
 
 const Modal = ({ content, handleClose }) => {
     return (
-        <div className="signin-popup">
-            <div className="popup">
-                <span className="discard" onClick={handleClose}>
-                    x
-                </span>
-                {content}
+        <div className={"signin-popup"}>
+            <div className={"popup"}>
+                <div className={"discard"} onClick={handleClose}>
+                    &times;
+                </div>
+                <div className={'modalContent'}>
+                    {content}
+                </div>
             </div>
         </div>
     )

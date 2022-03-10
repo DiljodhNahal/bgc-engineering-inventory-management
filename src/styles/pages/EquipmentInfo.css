@@ -1,0 +1,74 @@
+h3{
+
+    text-align: center;
+}
+li{
+    list-style: none;
+    display: inline;
+}
+
+p{
+    height: 150px;
+    width: 375px;
+
+}
+
+.one{
+
+    padding-left: 20px;
+
+}
+.two{
+
+    padding-left: 20px;
+}
+#boxOne{
+    text-align: left;
+    margin: 10px;
+}
+#boxTwo{
+    text-align: left;
+    margin: 10px;
+}
+#boxThree{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+}
+#boxFour{
+
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+
+}
+.camera{
+    margin-top: 5%;
+    margin-left: 15%;
+    max-width:30%;
+    min-width: 30%;
+    height: auto;
+    width: auto;
+
+}
+@media (max-width: 1000px) {
+    .camera{
+        width: 213px;
+        margin-left: 24%;
+
+    }
+}
+
+#serial{
+    padding-left: 39px;
+}
+
+.group{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+#mainBox{
+    display: flex;
+    flex-wrap: wrap;
+}

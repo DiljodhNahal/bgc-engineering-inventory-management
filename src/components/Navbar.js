@@ -5,7 +5,7 @@ import { MdMenu } from 'react-icons/md'
 import Logo from '../assets/images/bgc_logo.png'
 
 
-const Navbar = () => {
+const Navbar = ({ authentication, toggleModal }) => {
 
     const [menuOpen, setMenuOpen] = useState(false)
 
@@ -22,14 +22,16 @@ const Navbar = () => {
 
             <div className={`navigationMenu ${menuOpen && 'active'}`}>
 
-                <ul>
-
-                    <li><a href={'/'} className={`${useLocation().pathname === '/' && 'currentLocation'}`}>Home</a></li>
-                    <li><a href={'/search'} className={`${useLocation().pathname === '/search' && 'currentLocation'}`}>Search</a></li>
-                    <li><a href={'/dashboard'} className={`${useLocation().pathname === '/dashboard' && 'currentLocation'}`}>Dashboard</a></li>
-                    <li><a href={'/auth'} className={`${useLocation().pathname === '/auth' && 'currentLocation'}`}>Log In</a></li>
-
-                </ul>
+                {authentication.status === true &&
+                    <ul>
+                        <li><a href={'/'}>Home</a></li>
+                        <li><a href={'/search'}>Search</a></li>
+                        {authentication.user.accountType !== 0 &&
+                            <li><a href={'/dashboard'}>Dashboard</a></li>
+                        }
+                        <li><a style={{ cursor: 'pointer' }} onClick={toggleModal}>Logout</a></li>
+                    </ul>
+                }
 
             </div>
 

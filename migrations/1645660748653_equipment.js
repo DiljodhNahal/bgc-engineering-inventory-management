@@ -9,7 +9,6 @@ exports.up = pgm => {
     pgm.createExtension("uuid-ossp", {
         ifNotExists: true
     })
-    
     // Create Equipment Table
     pgm.createTable('equipment', {
         id: { type: 'uuid', primaryKey: true, default: new PgLiteral('uuid_generate_v4()'), notNull: true },
@@ -21,5 +20,6 @@ exports.up = pgm => {
         purchaseDate: { type: 'date' },
         barcode: { type: 'varchar(255)', notNull: true }
     })
+
 
 }

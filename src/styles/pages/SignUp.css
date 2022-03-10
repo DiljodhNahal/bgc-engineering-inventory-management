@@ -1,0 +1,21 @@
+#createEmployeeBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+select {
+    margin: 5px;
+    height: 50px;
+    width: 190px;
+    text-align: left;
+    font-size: medium;
+}
+
+.createForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100vw;
+    width: 100%;
+}

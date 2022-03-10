@@ -1,68 +1,91 @@
 import React, { useState } from 'react'
+import Button from '../components/Button'
 import Modal from '../components/Modal';
+import '../styles/pages/SignUp.css'
 
 const Auth = () => {
-    const [employee, setEmployee] = useState(false);
-    const [nonEmployee, setNonEmployee] = useState(false);
 
-    const toggleEmployee = () => {
-        setEmployee(!employee);
+    const [accountType, setAccountType] = useState(0)
+    const [modalStatus, setModalStatus] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const [email, setEmail] = useState('employee@bgc.ca')
+    const [password, setPassword] = useState('')
+
+    const login = () => {
+
+        setLoading(true)
+
+        fetch(`/api/auth`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: email, password: password })
+        }).then(response => {
+            if (response.status === 404) {
+                setLoading(false)
+                console.log(response)
+                alert('Incorrect Email and/or Password')
+            } else if (response.redirected) {
+                window.location.replace(response.url)
+            }
+        })
+
     }
 
-    const toggleNonEmployee = () => {
-        setNonEmployee(!nonEmployee);
+    const toggleModal = () => {
+        setModalStatus(!modalStatus)
+    }
+
+    const begin = (type) => {
+        setAccountType(type)
+        toggleModal()
     }
 
     return (
-        <div className='auth-look'>
-            <input
-                type="button"
-                value="Employee"
-                onClick={toggleEmployee}
-            /><br />
-            <input
-                type="button"
-                value="Equipment Manager/Administrator"
-                onClick={toggleNonEmployee}
-            />
-            {employee && <Modal
-                content={<>
-                    <b>Employee</b>
-                    <form>
-                        <input
-                            type={'password'}
-                            className={'password'}
-                            placeholder={'Password'}
-                            required
-                        /><br />
-                        <button>Log In</button>
-                    </form>
-                </>}
-                handleClose={toggleEmployee}
-            />}
-            {nonEmployee && <Modal
-                content={<>
-                    <b>Equipment Manager / Administrator</b>
-                    <form>
+        <div id={'createEmployeeBody'}>
+
+            {modalStatus &&
+            <Modal
+                content={
+                    <form className={'createForm'}>
+                        <h3>Login</h3>
+
+                        {accountType === 1 &&
                         <input
                             type={'email'}
                             className={'email'}
+                            id={'email'}
+                            onChange={event => setEmail(event.target.value)}
                             placeholder={'Email'}
                             required
-                        /><br />
+                        />
+                        }
+
                         <input
                             type={'password'}
                             className={'password'}
+                            id={'password'}
+                            onChange={event => setPassword(event.target.value)}
                             placeholder={'Password'}
                             required
-                        /> <br />
-                        <button>Log In</button>
+                        />
+
+                        <Button onClick={login} loading={loading}>Login</Button>
                     </form>
-                </>}
-                handleClose={toggleNonEmployee}
-            />}
+                }
+                handleClose={toggleModal}
+            />
+            }
+
+            <h2>Login</h2>
+            <Button onClick={() => begin(0)}>Employee</Button>
+            <Button onClick={() => begin(1)}>Manager</Button>
+
         </div>
     )
+
 }
 
 export default Auth

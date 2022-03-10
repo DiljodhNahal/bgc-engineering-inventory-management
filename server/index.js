@@ -1,24 +1,39 @@
 const express = require('express')
+const pool = require('./db')
 const bodyParser = require('body-parser')
 const path = require('path')
 const pino = require('express-pino-logger')()
+const bcrypt = require("bcrypt")
+const passport = require("passport");
+const initializePassport = require('./loginConfig')
+const session = require('express-session')
 
 require('dotenv').config()
 
 const app = express()
 
-const { Pool } = require('pg')
-
-let pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
+initializePassport(passport)
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(pino)
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.set('views', path.join(__dirname, 'src/pages'))
+
+app.use(
+    session({
+        secret: 'hidden',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false
+        }
+    })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Global Error Handling
 const asyncHandler = fn => (req, res, next) => {
@@ -28,7 +43,7 @@ const asyncHandler = fn => (req, res, next) => {
 }
 
 // Endpoints
-app.get('/api/search', asyncHandler(async (req, res, next) => {
+app.get('/api/search', asyncHandler(async (req, res) => {
 
     try {
         // Build SQL String
@@ -74,7 +89,7 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
         let results = await pool.query(queryString)
 
         // Build Response
-        let response = {count: results.rowCount, results: results.rows}
+        let response = { count: results.rowCount, results: results.rows }
 
         res.send(response)
     } catch (exception) {
@@ -83,10 +98,97 @@ app.get('/api/search', asyncHandler(async (req, res, next) => {
 
 }))
 
-// Checking User Data From Sign Up
-app.post("./pages/signup", (req, res) =>{
-    let { email, password } = req.body
-    
+app.post('/api/signup', asyncHandler(async (req, res) => {
+
+    try {
+        let { email, password, accountType } = req.body
+
+        let queryString = `SELECT * FROM users WHERE email = $1`
+        let response
+
+        // Salt To Be Used With Password
+        const SALT = 16
+
+        // Hashing The Password Entered
+        bcrypt.hash(password, SALT, (err, hash) => {
+            if (err) {
+                res.status(500).send('An Unexpected Error Occurred')
+                return
+            }
+            pool.query(
+                queryString, [email], (err, results) => {
+                    let queryInsertString = `INSERT INTO users("email", "password", "accountType") VALUES($1, $2, $3) RETURNING id, password`
+
+                    if (err) {
+                        res.status(500).send('An Unexpected Error Occurred')
+                        return
+                    }
+
+                    // Email Exists
+                    if (results.rows.length > 0) {
+                        res.status(409).send('Email Already Exists')
+                        return
+                    }
+
+                    // Now Register User
+                    pool.query(
+                        queryInsertString, [email, hash, accountType], (err, result) => {
+                            if (err) {
+                                response = { message: 'An Unexpected Error Occurred', status: 500 }
+                                res.send(response)
+                                return
+                            }
+                            res.status(201).send('Account Created')
+                        }
+                    )
+                }
+            )
+        })
+    } catch (exception) {
+        throw new Error(exception.message)
+    }
+}))
+
+// Validates The User And Redirects Them
+app.post("/api/auth", passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/auth",
+    })
+)
+
+// Checks If User Is Logged In
+app.get('/api/autheticated', asyncHandler(async (req, res) => {
+    let response = {
+        status: req.isAuthenticated()
+    }
+    if (req.isAuthenticated())
+        response.user = req.user
+
+    res.send(response)
+}))
+
+// Logs Out The User
+app.get('/api/logout', asyncHandler(async (req, res) => {
+    try {
+        req.logout()
+        res.json({'redirect': true})
+    } catch (exception) {
+        throw new Error(exception.message)
+    }
+}))
+
+app.post("/api/upload", async (req, res) => {
+    try {
+        const { name, description, color, serialNumber, price, purchaseDate, barcode } = req.body
+        const newItem = await pool.query(
+            'INSERT INTO equipment (name, description, color, "serialNumber", price, "purchaseDate", barcode) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+            [name, description, color, serialNumber, price, purchaseDate, barcode]
+        )
+        res.json(newItem.rows[0])
+    } catch (err) {
+        console.error(err.message)
+        throw new Error(exception.message)
+    }
 })
 
 // Global Error Handling
@@ -96,5 +198,5 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
+    console.log('Express server is running on localhost:3001')
 )
