@@ -6,7 +6,7 @@ const pino = require('express-pino-logger')()
 const bcrypt = require("bcrypt")
 const passport = require("passport");
 const initializePassport = require('./loginConfig')
-const session = require('express-session')
+const session = require('cookie-session')
 
 require('dotenv').config()
 
