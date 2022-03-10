@@ -5,7 +5,7 @@ import { MdMenu } from 'react-icons/md'
 import Logo from '../assets/images/bgc_logo.png'
 
 
-const Navbar = ({ authentication }) => {
+const Navbar = ({ authentication, toggleModal }) => {
 
     const [menuOpen, setMenuOpen] = useState(false)
 
@@ -29,7 +29,7 @@ const Navbar = ({ authentication }) => {
                         {authentication.user.accountType !== 0 &&
                             <li><a href={'/dashboard'}>Dashboard</a></li>
                         }
-                        <li><a>Logout</a></li>
+                        <li><a style={{ cursor: 'pointer' }} onClick={toggleModal}>Logout</a></li>
                     </ul>
                 }
 

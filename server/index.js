@@ -168,12 +168,14 @@ app.get('/api/autheticated', asyncHandler(async (req, res) => {
 }))
 
 // Logs Out The User
-app.post('/api/logout', (req, res) => {
-    req.logout()
-    .then(() => {
-        return req.isAuthenticated()
-    })
-})
+app.get('/api/logout', asyncHandler(async (req, res) => {
+    try {
+        req.logout()
+        res.json({'redirect': true})
+    } catch (exception) {
+        throw new Error(exception.message)
+    }
+}))
 
 app.post("/api/upload", async (req, res) => {
     try {
