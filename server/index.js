@@ -20,8 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(pino)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-const buildPath = path.join(__dirname, '..', 'build')
-app.use(express.static(buildPath))
 app.set('views', path.join(__dirname, 'src/pages'))
 
 app.use(
@@ -46,10 +44,6 @@ const asyncHandler = fn => (req, res, next) => {
 }
 
 // Endpoints
-app.get('*', function(req, res) {
-    res.sendFile(path.join(buildPath, 'index.html'))
-})
-
 app.get('/api/search', asyncHandler(async (req, res) => {
 
     try {
@@ -171,7 +165,7 @@ app.get('/api/autheticated', asyncHandler(async (req, res) => {
     if (req.isAuthenticated())
         response.user = req.user
 
-    res.send(response)
+    res.json(response)
 }))
 
 // Logs Out The User
@@ -196,6 +190,12 @@ app.post("/api/upload", async (req, res) => {
         console.error(err.message)
         throw new Error(exception.message)
     }
+})
+
+const buildPath = path.join(__dirname, '..', 'build')
+app.use(express.static(buildPath))
+app.get('*', function(req, res) {
+    res.sendFile(path.join(buildPath, 'index.html'))
 })
 
 // Global Error Handling

@@ -16,7 +16,7 @@ import Modal from './components/Modal'
 export default function App() {
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'/'}>
             <Routes>
                 <Route path={"/"} element={<Layout />}>
                     <Route index element={<Home />} />

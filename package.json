@@ -1,8 +1,9 @@
 {
   "name": "bgc-engineering",
-  "homepage": ".",
+  "homepage": "/",
   "version": "0.1.0",
   "private": true,
+  "main": "src/index.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -10,6 +11,7 @@
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
@@ -37,7 +39,7 @@
     "dev": "run-p server start",
     "migrate": "node-pg-migrate"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": "react-app"
   },

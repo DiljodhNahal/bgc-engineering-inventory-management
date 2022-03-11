@@ -11,8 +11,7 @@ const initialize = (passport) => {
             pool.query(
                 queryString, [email], (err, results) => {
                     if(err){
-                        res.status(500).send('An Unexpected Error Occurred')
-                        return
+                        return err
                     }
                     
                     // Checking If Email Exists
@@ -22,8 +21,7 @@ const initialize = (passport) => {
                         // Compare User Password
                         bcrypt.compare(password, user.password, (err, isMatch) => {
                             if(err){
-                                res.status(500).send('An Unexpected Error Occurred')
-                                return
+                                return err
                             }
                             
                             if(!isMatch){
