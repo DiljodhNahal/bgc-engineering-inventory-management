@@ -25,7 +25,6 @@ const Auth = () => {
         }).then(response => {
             if (response.status === 404) {
                 setLoading(false)
-                console.log(response)
                 alert('Incorrect Email and/or Password')
             } else if (response.redirected) {
                 window.location.replace(response.url)
