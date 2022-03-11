@@ -11,6 +11,7 @@ const session = require('cookie-session')
 require('dotenv').config()
 
 const app = express()
+const PORT = process.env.PORT || 3000
 
 initializePassport(passport)
 
@@ -199,6 +200,6 @@ app.use(function (err, req, res, next) {
 })
 
 
-app.listen(3001, () =>
-    console.log('Express server is running on localhost:3001')
+app.listen(PORT, () =>
+    console.log(`Express Server Is Now Running On ${PORT}`)
 )
