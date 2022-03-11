@@ -46,6 +46,10 @@ const asyncHandler = fn => (req, res, next) => {
 }
 
 // Endpoints
+app.get('*', function(req, res) {
+    res.sendFile(path.join(buildPath, 'index.html'))
+})
+
 app.get('/api/search', asyncHandler(async (req, res) => {
 
     try {
