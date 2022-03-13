@@ -165,6 +165,8 @@ app.get('/api/autheticated', asyncHandler(async (req, res) => {
     if (req.isAuthenticated())
         response.user = req.user
 
+    console.log("haris' mom")
+
     res.json(response)
 }))
 
@@ -186,8 +188,7 @@ app.post("/api/upload", async (req, res) => {
             [name, description, color, serialNumber, price, purchaseDate, barcode]
         )
         res.json(newItem.rows[0])
-    } catch (err) {
-        console.error(err.message)
+    } catch (exception) {
         throw new Error(exception.message)
     }
 })
