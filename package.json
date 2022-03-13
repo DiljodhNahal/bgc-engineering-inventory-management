@@ -36,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server/index.js",
-    "dev": "react-scripts start",
+    "front": "react-scripts start",
+    "dev": "run-p server front",
     "migrate": "node-pg-migrate"
   },
   "proxy": "http://localhost:3000",
