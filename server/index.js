@@ -11,7 +11,7 @@ const session = require('cookie-session')
 require('dotenv').config()
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 
 initializePassport(passport)
 
