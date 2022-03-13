@@ -11,7 +11,7 @@ import SignUp from './pages/SignUp'
 import Error from './pages/Error'
 import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
-import Modal from './components/Modal'
+import ManageUser from './pages/ManageUser'
 
 export default function App() {
 
@@ -25,6 +25,7 @@ export default function App() {
                     <Route path={"auth"} element={<Auth />} />
                     <Route path={"signup"} element={<SignUp />} />
                     <Route path={"create"} element={<Create />} />
+                    <Route path={"manageuser"} element={<ManageUser />} />
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />

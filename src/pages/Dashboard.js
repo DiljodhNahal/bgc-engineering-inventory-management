@@ -20,7 +20,7 @@ const Dashboard = () => {
                 <div className={'btn-group'}>
                     <Button>Signed Out Items</Button>
                     <Button onClick={() => navigation('/signup')}>Create Users</Button>
-                    <Button>Manage Users</Button>
+                    <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
                 </div>
 
             </div>
