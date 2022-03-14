@@ -22,6 +22,10 @@ const Dashboard = () => {
                     <Button onClick={() => navigation('/signup')}>Create Users</Button>
                     <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
                 </div>
+                <div className={'btn-group'}>
+                    
+                    <Button onClick={() => navigation('/announcements')}>Announcements</Button>
+                </div>
 
             </div>
             
