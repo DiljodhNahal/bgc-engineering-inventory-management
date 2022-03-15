@@ -72,3 +72,13 @@ p{
     display: flex;
     flex-wrap: wrap;
 }
+button {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    text-align: center;
+    height: 40px;
+    width: 30%;
+    margin-bottom: 6%;
+}

@@ -1,0 +1,52 @@
+.itemsTable {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  margin-left: auto;
+  table-layout: fixed;
+  margin-right: auto;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+.itemsTable thead tr {
+  background-color: var(--primary);
+  color: #ffffff;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.itemsTable thead th,
+td {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.itemsTable th,
+.itemsTable td {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  text-align: center;
+}
+.itemsTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+  text-align: center;
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  text-align: center;
+  height: 50px;
+  width: 100px;
+  margin-bottom: 6%;
+}
