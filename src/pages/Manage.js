@@ -1,21 +1,31 @@
 import React, { useState } from "react";
 import "../styles/pages/Create.css";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const Create = () => {
-  const [name, setName] = useState("");
-  const [purchaseDate, setPurchaseDate] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [serialNumber, setSerialNumber] = useState("");
-  const [color, setColor] = useState("");
-  const [barcode, setBarcode] = useState("");
-  const [category, setCategory] = useState("");
-  const [type, setType] = useState("");
-  const [productCode, setProductCode] = useState("");
-  const [location, setLocation] = useState("");
-  const [warrantyExpiryDate, setWarrantyExpiryDate] = useState("");
-  const [projectNumber, setProjectNumber] = useState("");
-  const [status, setStatus] = useState("");
+
+const Manage = () => {
+  const location = useLocation();
+  let { id } = useParams();
+
+  const [name, setName] = useState(location.state.name);
+  const [purchaseDate, setPurchaseDate] = useState(location.state.purchaseDate);
+  const [price, setPrice] = useState(location.state.price);
+  const [description, setDescription] = useState(location.state.description);
+  const [serialNumber, setSerialNumber] = useState(location.state.serialNumber);
+  const [color, setColor] = useState(location.state.color);
+  const [barcode, setBarcode] = useState(location.state.barcode);
+  const [category, setCategory] = useState(location.state.category);
+  const [type, setType] = useState(location.state.type);
+  const [productCode, setProductCode] = useState(location.state.productCode);
+  const [locationItem, setLocationItem] = useState(location.state.location);
+  const [warrantyExpiryDate, setWarrantyExpiryDate] = useState(
+    location.state.warrantyExpiryDate
+  );
+  const [projectNumber, setProjectNumber] = useState(
+    location.state.projectNumber
+  );
+  const [status, setStatus] = useState(location.state.statusItem);
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -36,11 +46,13 @@ const Create = () => {
         projectNumber,
         warrantyExpiryDate,
       };
-      fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      })
+      fetch(
+        `/items/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        })
         .then((response) => response.json())
         .then((data) => window.location.replace(`/info/${data.id}`));
     } catch (err) {
@@ -50,7 +62,7 @@ const Create = () => {
 
   return (
     <form onSubmit={onSubmitForm}>
-      <h1>Create Inventory</h1>
+      <h1>Manage Inventory</h1>
       <div className="mainBox">
         <div>
           <div className="title">Item Name</div>
@@ -211,8 +223,8 @@ const Create = () => {
           <div>
             <div className="smallTitle">Item Location</div>
             <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              value={locationItem}
+              onChange={(e) => setLocationItem(e.target.value)}
               id="location"
               type="text"
               name="location"
@@ -267,18 +279,18 @@ const Create = () => {
         </div>
         <div id="scanRow">
           <button id="scan-button" onClick={() => {}}>
-            Scan Item
+            Rescan Item
           </button>
         </div>
       </div>
 
       <div id="createItem">
         <button id="Create-button" type="submit">
-          Create Item
+          Update Item
         </button>
       </div>
     </form>
   );
 };
 
-export default Create;
+export default Manage;

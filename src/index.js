@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from './Layout'
 import Home from './pages/Home'
@@ -13,6 +13,8 @@ import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
 import ManageUser from './pages/ManageUser'
 import Announcements from './pages/Announcements'
+import Manage from "./pages/Manage";
+import ListItems from "./pages/ListItems";
 
 export default function App() {
 
@@ -27,6 +29,9 @@ export default function App() {
                     <Route path={"signup"} element={<SignUp />} />
                     <Route path={"create"} element={<Create />} />
                     <Route path={"manageuser"} element={<ManageUser />} />
+                    <Route path={"manage"} element={<Manage />} />
+                    <Route path={"list"} element={<ListItems />} />
+
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
                     <Route path={"announcements"} element={<Announcements />} />
                 </Route>
@@ -37,4 +42,4 @@ export default function App() {
 
 }
 
-ReactDOM.render(<App />, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"));
