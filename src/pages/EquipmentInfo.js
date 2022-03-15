@@ -87,20 +87,77 @@ const EquipmentInfo = () => {
           <div id={"boxThree"}>
             <li className={"three"}>
               <label>
+                <strong>Description:</strong>
+              </label>
+              <p>{equipment.description}</p>
+            </li>
+          </div>
+
+          <div id={"boxFour"}>
+          <li className={"four"}>
+              <label>
+                <strong>Item Type:</strong>
+              </label>{" "}
+              {equipment.type}
+            </li>
+            <li className={"four"}>
+              <label>
+                <strong>Category:</strong>
+              </label>{" "}
+              {equipment.category}
+            </li>
+          </div>
+
+          <div id={"boxFive"}>
+          <li className={"five"}>
+              <label>
+                <strong>Item Status:</strong>
+              </label>{" "}
+              {equipment.status}
+            </li>
+          </div>
+          
+          <div id={"boxSix"}>
+          <li className={"six"}>
+              <label>
+                <strong>Product Code:</strong>
+              </label>{" "}
+              {equipment.productCode}
+            </li>
+            <li className={"six"}>
+              <label>
+                <strong>Location:</strong>
+              </label>{" "}
+              {equipment.location}
+            </li>
+          </div>
+
+          <div id={"boxSix"}>
+          <li className={"six"}>
+              <label>
+                <strong>Project Number:</strong>
+              </label>{" "}
+              {equipment.projectNumber}
+            </li>
+            <li className={"six"}>
+              <label>
+                <strong>Warranty Expiry:</strong>
+              </label>{" "}
+              {equipment.warrantyExpiryDate}
+            </li>
+          </div>
+
+          
+          <div id={"boxSeven"}>
+            <li className={"seven"}>
+              <label>
                 <strong>Barcode:</strong>
               </label>{" "}
               {equipment.barcode}
             </li>
           </div>
 
-          <div id={"boxFour"}>
-            <li className={"four"}>
-              <label>
-                <strong>Description:</strong>
-              </label>
-              <p>{equipment.description}</p>
-            </li>
-          </div>
+          
 
           <button
             onClick={() => {

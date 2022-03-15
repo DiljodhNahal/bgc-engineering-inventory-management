@@ -13,21 +13,15 @@ p{
 
 }
 
-.one{
 
-    padding-left: 20px;
-
-}
-.two{
-
-    padding-left: 20px;
-}
 #boxOne{
     text-align: left;
+    padding-left: 20px;
     margin: 10px;
 }
 #boxTwo{
     text-align: left;
+    padding-left: 20px;
     margin: 10px;
 }
 #boxThree{
@@ -36,7 +30,24 @@ p{
     margin: 10px;
 }
 #boxFour{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
 
+}
+#boxFive{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+
+}
+#boxSix{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+
+}
+#boxSeven{
     text-align: left;
     padding-left: 20px;
     margin: 10px;
