@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { reactLocalStorage } from 'reactjs-localstorage'
 
 import './styles/Main.css'
 import Button from './components/Button'
@@ -25,6 +26,9 @@ const Layout = () => {
                 setAuthentication(data)
                 if (data.status === false) {
                     navigation('/auth')
+                } else{
+                    reactLocalStorage.set('adminEmail', data.user.email);
+                    reactLocalStorage.set('adminID', data.user.id);
                 }
             })
             .then(() => {
