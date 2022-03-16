@@ -61,7 +61,7 @@ const EquipmentInfo = () => {
               </label>{" "}
               {equipment.color}
             </li>
-            <li className={"one"} id="serial">
+            <li className={"two"} id={"serial"}>
               <label>
                 <strong>Serial Number:</strong>
               </label>{" "}
@@ -70,7 +70,7 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxTwo"}>
-            <li className={"two"}>
+            <li className={"one"}>
               <label>
                 <strong>Price:</strong>
               </label>{" "}
@@ -84,23 +84,14 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          <div id={"boxThree"}>
-            <li className={"three"}>
-              <label>
-                <strong>Description:</strong>
-              </label>
-              <p>{equipment.description}</p>
-            </li>
-          </div>
-
           <div id={"boxFour"}>
-          <li className={"four"}>
+          <li className={"one"}>
               <label>
                 <strong>Item Type:</strong>
               </label>{" "}
               {equipment.type}
             </li>
-            <li className={"four"}>
+            <li className={"two"}id={"category"}>
               <label>
                 <strong>Category:</strong>
               </label>{" "}
@@ -109,37 +100,37 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxFive"}>
-          <li className={"five"}>
+          <li className={"one"}>
               <label>
                 <strong>Item Status:</strong>
               </label>{" "}
               {equipment.status}
             </li>
-          </div>
-          
-          <div id={"boxSix"}>
-          <li className={"six"}>
+            <li className={"two"}id={"productCode"}>
               <label>
                 <strong>Product Code:</strong>
               </label>{" "}
               {equipment.productCode}
             </li>
-            <li className={"six"}>
+          </div>
+          
+          <div id={"boxSix"}>
+            <li className={"one"}>
               <label>
                 <strong>Location:</strong>
               </label>{" "}
               {equipment.location}
             </li>
-          </div>
-
-          <div id={"boxSix"}>
-          <li className={"six"}>
+            <li className={"two"}id={"projectNumber"}>
               <label>
                 <strong>Project Number:</strong>
               </label>{" "}
               {equipment.projectNumber}
             </li>
-            <li className={"six"}>
+          </div>
+
+          <div id={"boxSix"}>
+            <li className={"one"}>
               <label>
                 <strong>Warranty Expiry:</strong>
               </label>{" "}
@@ -149,7 +140,7 @@ const EquipmentInfo = () => {
 
           
           <div id={"boxSeven"}>
-            <li className={"seven"}>
+            <li className={"one"}>
               <label>
                 <strong>Barcode:</strong>
               </label>{" "}
@@ -157,7 +148,14 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          
+          <div id={"boxThree"}>
+            <li className={"one"}>
+              <label>
+                <strong>Description:</strong>
+              </label>
+              <p>{equipment.description}</p>
+            </li>
+          </div>
 
           <button
             onClick={() => {

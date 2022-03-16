@@ -6,13 +6,16 @@ li{
     list-style: none;
     display: inline;
 }
-
-p{
-    height: 150px;
-    width: 375px;
-
+label{
+    padding-left: 40px;
 }
-
+p{
+   height: auto;
+   width: auto;
+   position: relative;
+   left: 72px;
+   
+}
 
 #boxOne{
     text-align: left;
@@ -54,7 +57,7 @@ p{
 
 }
 .camera{
-    margin-top: 5%;
+    margin-top: 4%;
     margin-left: 15%;
     max-width:30%;
     min-width: 30%;
@@ -71,7 +74,19 @@ p{
 }
 
 #serial{
-    padding-left: 39px;
+    padding-left: 49.5px;
+}
+
+#category{
+    padding-left: 37px;
+}
+
+#productCode{
+    padding-left: 21.5px;
+}
+
+#projectNumber{
+    padding-left: 46px;
 }
 
 .group{
