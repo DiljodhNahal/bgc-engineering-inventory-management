@@ -168,7 +168,9 @@ app.get(
     let response = {
       status: req.isAuthenticated(),
     };
-    if (req.isAuthenticated()) response.user = req.user;
+    if (req.isAuthenticated()){
+      response.user = req.user;
+    }
 
     res.json(response);
   })
@@ -186,6 +188,15 @@ app.get(
     }
   })
 );
+
+app.get("/users", async (req, res) => {
+  try {
+    const allUsers = await pool.query("SELECT * FROM users");
+    res.json(allUsers.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 app.get("/items", async (req, res) => {
   try {
@@ -238,6 +249,47 @@ app.post("/api/upload", async (req, res) => {
     throw new Error(exception.message);
   }
 });
+
+app.post("/api/users/admin/delete/:id", async (req, res) => {
+  try {
+    req.logout();
+    pool.query("DELETE FROM users WHERE id=$1", [req.params.id])
+    res.json({ redirect: true });
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+app.post("/api/users/delete/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM users WHERE id=$1", [req.params.id])
+    res.status(204).send("Account Deleted")
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+app.post("/api/users/update/:id", async (req, res) => {
+  try {
+    let queryString = `UPDATE users SET email=$1, password=$2, "accountType"=$3 WHERE id=$4`;
+    let { email, password, accountType } = req.body;
+
+    // Salt To Be Used With Password
+    const SALT = 16;
+
+    // Hashing The Password Entered
+    bcrypt.hash(password, SALT, (err, hash) => {
+      if (err) {
+        res.status(500).send("An Unexpected Error Occurred")
+        return
+      }
+      pool.query(queryString, [email, hash, accountType, req.params.id])
+      res.status(200).send("Account Deleted")
+    })
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
 
 app.put("/items/:id", async (req, res) => {
   try {
