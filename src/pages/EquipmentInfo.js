@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/pages/EquipmentInfo.css";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
 import { useParams } from "react-router-dom";
@@ -9,27 +10,6 @@ import Button from "../components/Button";
 const EquipmentInfo = () => {
   let { id } = useParams();
   const navigation = useNavigate();
-
-  const toComponentB = () => {
-    navigation("/manage", {
-      state: {
-        name: equipment.name,
-        color: equipment.color,
-        serialNumber: equipment.serialNumber,
-        price: equipment.price,
-        purchaseDate: equipment.purchaseDate,
-        barcode: equipment.barcode,
-        description: equipment.description,
-        type: equipment.type,
-        category: equipment.category,
-        statusItem: equipment.status,
-        productCode: equipment.productCode,
-        location: equipment.location,
-        projectNumber: equipment.projectNumber,
-        warrantyExpiryDate: equipment.warrantyExpiryDate,
-      },
-    });
-  };
 
   const [loaded, setLoaded] = useState(false);
   const [equipment, setEquipment] = useState();
@@ -140,13 +120,13 @@ const EquipmentInfo = () => {
               <label>
                 <strong>Price:</strong>
               </label>{" "}
-              ${equipment.price}
+              {equipment.price === null ? "" : "$" + equipment.price}
             </li>
             <li className={"two"}>
               <label>
                 <strong>Purchase Date:</strong>
               </label>{" "}
-              {equipment.purchaseDate}
+              {moment.utc(equipment.purchaseDate).format("YYYY-MM-DD")}
             </li>
           </div>
 
@@ -170,7 +150,7 @@ const EquipmentInfo = () => {
 
           <button
             onClick={() => {
-              toComponentB();
+              navigation(`/manage/${id}`);
             }}
           >
             Edit Item Attributes
