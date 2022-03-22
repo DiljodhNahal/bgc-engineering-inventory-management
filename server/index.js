@@ -291,7 +291,8 @@ app.post("/api/users/update/:id", async (req, res) => {
   }
 })
 
-app.put("/items/:id", async (req, res) => {
+
+app.post("/info/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const {
