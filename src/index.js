@@ -14,6 +14,8 @@ import EquipmentInfo from './pages/EquipmentInfo'
 import ManageUser from './pages/ManageUser'
 import Manage from "./pages/Manage";
 import ListItems from "./pages/ListItems";
+import SignedOutItems from "./pages/SignedOutItems";
+import Requests from "./pages/Requests";
 
 export default function App() {
 
@@ -30,8 +32,9 @@ export default function App() {
                     <Route path={"manageuser"} element={<ManageUser />} />
                     <Route path={"manage"} element={<Manage />} />
                     <Route path={"list"} element={<ListItems />} />
-
+                    <Route path={"signedoutitems"} element={<SignedOutItems/>} />
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
+                    <Route path={"requests"} element={<Requests/>} />
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>

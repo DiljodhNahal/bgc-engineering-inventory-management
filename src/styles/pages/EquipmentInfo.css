@@ -1,7 +1,7 @@
 h3{
-
     text-align: center;
 }
+
 li{
     list-style: none;
     display: inline;
@@ -10,7 +10,6 @@ li{
 p{
     height: 150px;
     width: 375px;
-
 }
 
 .one{
@@ -18,30 +17,34 @@ p{
     padding-left: 20px;
 
 }
+
 .two{
 
     padding-left: 20px;
 }
+
 #boxOne{
     text-align: left;
     margin: 10px;
 }
+
 #boxTwo{
     text-align: left;
     margin: 10px;
 }
+
 #boxThree{
     text-align: left;
     padding-left: 20px;
     margin: 10px;
 }
-#boxFour{
 
+#boxFour{
     text-align: left;
     padding-left: 20px;
     margin: 10px;
-
 }
+
 .camera{
     margin-top: 5%;
     margin-left: 15%;
@@ -49,13 +52,12 @@ p{
     min-width: 30%;
     height: auto;
     width: auto;
-
 }
+
 @media (max-width: 1000px) {
     .camera{
         width: 213px;
         margin-left: 24%;
-
     }
 }
 
@@ -68,10 +70,12 @@ p{
     display: flex;
     flex-direction: column;
 }
+
 #mainBox{
     display: flex;
     flex-wrap: wrap;
 }
+
 button {
     background-color: var(--primary);
     color: white;
@@ -81,4 +85,8 @@ button {
     height: 40px;
     width: 30%;
     margin-bottom: 6%;
+    margin-left: 25px;
+    float: left;
+
 }
+
