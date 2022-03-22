@@ -75,9 +75,11 @@ const EquipmentInfo = () => {
 
           <div id={"boxFour"}>
             <li className={"four"}>
+              
               <label>
                 <strong>Description:</strong>
               </label>
+              
               <p>{equipment.description}</p>
             </li>
           </div>
