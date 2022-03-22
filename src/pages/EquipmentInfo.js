@@ -155,7 +155,7 @@ const EquipmentInfo = () => {
           >
             Edit Item Attributes
           </button>
-          <button 
+          <button
             onClick={toggleModal}
           >
             Request Item
