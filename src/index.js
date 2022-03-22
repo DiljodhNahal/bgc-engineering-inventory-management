@@ -28,7 +28,7 @@ export default function App() {
                     <Route path={"signup"} element={<SignUp />} />
                     <Route path={"create"} element={<Create />} />
                     <Route path={"manageuser"} element={<ManageUser />} />
-                    <Route path={"manage"} element={<Manage />} />
+                    <Route path={"manage/:id"} element={<Manage />} />
                     <Route path={"list"} element={<ListItems />} />
 
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
