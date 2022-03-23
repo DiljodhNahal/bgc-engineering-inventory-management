@@ -224,14 +224,14 @@ const ManageUser = () => {
                     setEmail(reactLocalStorage.get('adminEmail'))
                     setAccountType(2)
                     toggleUpdateModal()
-                }}>Manage Current</button>
+                }}>Manage Account</button>
                 <button onClick={() => {
                     setID(reactLocalStorage.get('adminID'))
                     setEmail(reactLocalStorage.get('adminEmail'))
                     setAccountType(2)
                     toggleDeleteAdminModal()
                 }}>
-                    Delete Current
+                    Delete Account
                 </button>
             </div>
 
@@ -240,7 +240,7 @@ const ManageUser = () => {
                     <div>
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Account Type</th>
                                 <th>Email</th>
                                 <th>Update</th>
                                 <th>Delete</th>
@@ -252,7 +252,7 @@ const ManageUser = () => {
                                 null
                             ) :
                                 <tr key={user.id}>
-                                    <td>{user.id}</td>
+                                    <td>{user.accountType === 0 ? 'Employee' : 'Equipment Manager'}</td>
                                     <td>{user.email}</td>
                                     <td>
                                         <button onClick={() => {

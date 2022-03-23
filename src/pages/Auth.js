@@ -9,7 +9,7 @@ const Auth = () => {
     const [modalStatus, setModalStatus] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    const [email, setEmail] = useState('employee@bgc.ca')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const login = () => {
@@ -29,7 +29,7 @@ const Auth = () => {
             } else if (response.redirected) {
                 window.location.replace(response.url)
             }
-            
+
         })
 
     }
@@ -52,16 +52,14 @@ const Auth = () => {
                         <form className={'createForm'}>
                             <h3>Login</h3>
 
-                            {accountType === 1 &&
-                                <input
-                                    type={'email'}
-                                    className={'email'}
-                                    id={'email'}
-                                    onChange={event => setEmail(event.target.value)}
-                                    placeholder={'Email'}
-                                    required
-                                />
-                            }
+                            <input
+                                type={'email'}
+                                className={'email'}
+                                id={'email'}
+                                onChange={event => setEmail(event.target.value)}
+                                placeholder={'Email'}
+                                required
+                            />
 
                             <input
                                 type={'password'}
