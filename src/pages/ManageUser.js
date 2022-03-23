@@ -237,7 +237,7 @@ const ManageUser = () => {
 
             <Table
                 content={
-                    <div>
+                    <React.Fragment>
                         <thead>
                             <tr>
                                 <th>Account Type</th>
@@ -275,7 +275,7 @@ const ManageUser = () => {
                                 </tr>
                             )}
                         </tbody>
-                    </div>
+                    </React.Fragment>
                 }
             ></Table>
         </div >

@@ -46,7 +46,7 @@ const ListItems = () => {
             }
     <Table
       content={
-        <div>
+        <React.Fragment>
           <thead>
             <tr>
            
@@ -131,7 +131,7 @@ const ListItems = () => {
               </tr>
             ))}
           </tbody>
-        </div>
+          </React.Fragment>
       }
     ></Table>
     </div>
