@@ -4,11 +4,11 @@ import "../styles/components/Table.css";
 
 const Table = ({ content }) => {
   return (
-    <div>
+    
       <table className="itemsTable">
-        <div className="content">{content}</div>
+        <React.Fragment>{content}</React.Fragment>
       </table>
-    </div>
+      
   );
 };
 
