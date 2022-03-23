@@ -33,7 +33,7 @@ const ListItems = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <div>
         {modalStatus &&
                 <Modal
                     content={
@@ -134,7 +134,7 @@ const ListItems = () => {
           </React.Fragment>
       }
     ></Table>
-    </React.Fragment>
+    </div>
   );
 };
 
