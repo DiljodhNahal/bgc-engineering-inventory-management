@@ -291,7 +291,8 @@ app.post("/api/users/update/:id", async (req, res) => {
   }
 })
 
-app.put("/items/:id", async (req, res) => {
+
+app.post("/info/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -306,7 +307,7 @@ app.put("/items/:id", async (req, res) => {
       category,
       status,
       productCode,
-      location,
+      locationItem,
       projectNumber,
       warrantyExpiryDate,
     } = req.body;
@@ -324,16 +325,28 @@ app.put("/items/:id", async (req, res) => {
         category,
         status,
         productCode,
-        location,
+        locationItem,
         projectNumber,
         warrantyExpiryDate,
         id,
       ]
-    );
+    )
+    
 
     res.json(updatedItem.rows[0]);
   } catch (err) {
     console.error(err.message);
+  }
+});
+
+app.post("/api/info/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query("DELETE FROM equipment WHERE id = $1", [
+      id
+    ]);
+  } catch (err) {
+    console.log(err.message);
   }
 });
 

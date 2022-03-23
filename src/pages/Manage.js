@@ -1,32 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/pages/Create.css";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
+import moment from 'moment';
 
 const Manage = () => {
-  const location = useLocation();
+  const [loaded, setLoaded] = useState(false);
+  const [equipment, setEquipment] = useState();
   let { id } = useParams();
+  
+  const [name, setName] = useState("");
+  const [purchaseDate, setPurchaseDate] = useState();
+  const [price, setPrice] = useState();
+  const [description, setDescription] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
+  const [color, setColor] = useState("");
+  const [barcode, setBarcode] = useState();
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("");
+  const [productCode, setProductCode] = useState();
+  const [locationItem, setLocationItem] = useState("");
+  const [warrantyExpiryDate, setWarrantyExpiryDate] = useState();
+  const [projectNumber, setProjectNumber] = useState();
+  const [status, setStatus] = useState("");
 
-  const [name, setName] = useState(location.state.name);
-  const [purchaseDate, setPurchaseDate] = useState(location.state.purchaseDate);
-  const [price, setPrice] = useState(location.state.price);
-  const [description, setDescription] = useState(location.state.description);
-  const [serialNumber, setSerialNumber] = useState(location.state.serialNumber);
-  const [color, setColor] = useState(location.state.color);
-  const [barcode, setBarcode] = useState(location.state.barcode);
-  const [category, setCategory] = useState(location.state.category);
-  const [type, setType] = useState(location.state.type);
-  const [productCode, setProductCode] = useState(location.state.productCode);
-  const [locationItem, setLocationItem] = useState(location.state.location);
-  const [warrantyExpiryDate, setWarrantyExpiryDate] = useState(
-    location.state.warrantyExpiryDate
-  );
-  const [projectNumber, setProjectNumber] = useState(
-    location.state.projectNumber
-  );
-  const [status, setStatus] = useState(location.state.statusItem);
+  useEffect(() => {
+    fetch(`/api/search?id=${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setEquipment(data.results[0]);
+        setLoaded(true);
+      });
+  }, []);
 
+  if (!loaded) return null;
+  
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
@@ -42,23 +49,21 @@ const Manage = () => {
         category,
         status,
         productCode,
-        location,
+        locationItem,
         projectNumber,
         warrantyExpiryDate,
       };
-      fetch(
-        `/items/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body)
-        })
-        .then((response) => response.json())
-        .then((data) => window.location.replace(`/info/${data.id}`));
+      fetch(`/info/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then(() => window.location.replace(`/info/${id}`));
     } catch (err) {
       console.error(err.message);
     }
   };
+
 
   return (
     <form onSubmit={onSubmitForm}>
@@ -67,12 +72,12 @@ const Manage = () => {
         <div>
           <div className="title">Item Name</div>
           <input
-            value={name}
+            
             onChange={(e) => setName(e.target.value)}
             id="name"
             type="text"
             name="name"
-            placeholder="e.g. HP Camera"
+            placeholder={equipment.name}
             required
           />
         </div>
@@ -83,12 +88,13 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Purchase Date</div>
             <input
-              value={purchaseDate}
+             value={purchaseDate}
               onChange={(e) => setPurchaseDate(e.target.value)}
               id="purchaseDate"
               type="date"
               name="purchaseDate"
-              placeholder="e.g. 2020-07-13"
+              placeholder={equipment.purchaseDate}
+              required
             />
           </div>
         </div>
@@ -96,12 +102,12 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Purchase Price</div>
             <input
-              value={price}
+             
               onChange={(e) => setPrice(e.target.value)}
               id="price"
               type="number"
               name="price"
-              placeholder="e.g. 565.25"
+              placeholder={equipment.price}
               step="any"
             />
           </div>
@@ -112,13 +118,13 @@ const Manage = () => {
         <div>
           <div className="descriptionTitle">Item Description</div>
           <textarea
-            value={description}
+          
             onChange={(e) => setDescription(e.target.value)}
             id="description"
             name="description"
             rows="5"
             cols="63"
-            placeholder="e.g. HP Camera that is colored black "
+            placeholder={equipment.description}
           />
         </div>
       </div>
@@ -128,12 +134,12 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Serial Number</div>
             <input
-              value={serialNumber}
+             
               onChange={(e) => setSerialNumber(e.target.value)}
               id="serialNumber"
               type="text"
               name="serialNumber"
-              placeholder="e.g. 76BD1S7F0GCBFB29"
+              placeholder={equipment.serialNumber}
             />
           </div>
         </div>
@@ -141,17 +147,18 @@ const Manage = () => {
           <div>
             <div className="colorTitle">Item Color</div>
             <select
-              value={color}
               onChange={(e) => setColor(e.target.value)}
               name="color"
               id="color"
               required
+              placeholder={equipment.color}
             >
-              <option value="Choose_Color">Choose Color</option>
+              <option value="">Choose Color</option>
               <option value="Red">Red</option>
               <option value="Green">Green</option>
               <option value="Orange">Orange</option>
               <option value="Yellow">Yellow</option>
+              <option value="Brown">Brown</option>
               <option value="Black">Black</option>
               <option value="Pink">Pink</option>
               <option value="Blue">Blue</option>
@@ -166,12 +173,12 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Item Type</div>
             <input
-              value={type}
+             
               onChange={(e) => setType(e.target.value)}
               id="type"
               type="text"
               name="type"
-              placeholder="e.g. Mining"
+              placeholder={equipment.type}
             />
           </div>
         </div>
@@ -179,12 +186,12 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Category</div>
             <input
-              value={category}
+             
               onChange={(e) => setCategory(e.target.value)}
               id="category"
               type="text"
               name="category"
-              placeholder="e.g. Mining equipment"
+              placeholder={equipment.category}
             />
           </div>
         </div>
@@ -194,13 +201,12 @@ const Manage = () => {
         <div>
           <div className="descriptionTitle">Item Status</div>
           <textarea
-            value={status}
             onChange={(e) => setStatus(e.target.value)}
             id="status"
             name="status"
             rows="1"
             cols="63"
-            placeholder="e.g. Item returned on 2022/03/11 back to Vancouver location"
+            placeholder={equipment.status}
           />
         </div>
       </div>
@@ -210,12 +216,11 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Product Code</div>
             <input
-              value={productCode}
               onChange={(e) => setProductCode(e.target.value)}
               id="productCode"
               type="text"
               name="productCode"
-              placeholder="e.g. 73HD72G6"
+              placeholder={equipment.productCode}
             />
           </div>
         </div>
@@ -223,12 +228,11 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Item Location</div>
             <input
-              value={locationItem}
               onChange={(e) => setLocationItem(e.target.value)}
               id="location"
               type="text"
               name="location"
-              placeholder="e.g. 105 Avenue, Surrey, BC, Canada"
+              placeholder={equipment.location}
             />
           </div>
         </div>
@@ -239,12 +243,11 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Project Number</div>
             <input
-              value={projectNumber}
               onChange={(e) => setProjectNumber(e.target.value)}
               id="projectNumber"
               type="number"
               name="projectNumber"
-              placeholder="e.g. 28472742"
+              placeholder={equipment.projectNumber}
             />
           </div>
         </div>
@@ -257,7 +260,8 @@ const Manage = () => {
               id="warrantyExpireDate"
               type="date"
               name="warrantyExpireDate"
-              placeholder="e.g. 2020-07-13"
+              placeholder={equipment.warrantyExpiryDate}
+              required
             />
           </div>
         </div>
@@ -268,11 +272,10 @@ const Manage = () => {
           <div>
             <div className="scanTitle">Barcode Number</div>
             <input
-              value={barcode}
               onChange={(e) => setBarcode(e.target.value)}
               id="barcodeNum"
               type="number"
-              placeholder="e.g. 7622300710613271"
+              placeholder={equipment.barcode}
               required
             />
           </div>

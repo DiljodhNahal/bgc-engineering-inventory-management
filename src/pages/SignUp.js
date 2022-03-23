@@ -5,13 +5,14 @@ import '../styles/pages/SignUp.css'
 
 const SignUp = () => {
 
-    const [accountType, setAccountType] = useState(1)
+    const [accountType, setAccountType] = useState(0)
     const [modalStatus, setModalStatus] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const accountNames = ['Employee', 'Equipment Manager', 'Administrator']
 
 
     const updateAccountType = (event) => {
@@ -43,20 +44,20 @@ const SignUp = () => {
 
             })
         })
-        .then(response => {
-            setLoading(false)
-            if (response.status === 500) {
-                alert("An Unexpected Error Has Occurred")
-            } else if (response.status === 409) {
-                alert("An Account With This Email Already Exists")
-            } else {
-                setEmail('')
-                setPassword('')
-                setConfirmPassword('')
-                setModalStatus(false)
-                alert("Account Successfully Created")
-            }
-        })
+            .then(response => {
+                setLoading(false)
+                if (response.status === 500) {
+                    alert("An Unexpected Error Has Occurred")
+                } else if (response.status === 409) {
+                    alert("An Account With This Email Already Exists")
+                } else {
+                    setEmail('')
+                    setPassword('')
+                    setConfirmPassword('')
+                    setModalStatus(false)
+                    alert("Account Successfully Created")
+                }
+            })
     }
 
     return (
@@ -66,7 +67,7 @@ const SignUp = () => {
                 <Modal
                     content={
                         <form className={'createForm'}>
-                            <h3>Create {accountType === 1 ? "Equipment Manager" : "Administrator"}</h3>
+                            <h3>Create {accountNames[accountType]}</h3>
                             <input
                                 type={'email'}
                                 className={'email'}
@@ -107,6 +108,7 @@ const SignUp = () => {
             <h2>Create New Account</h2>
 
             <select value={accountType} onChange={updateAccountType}>
+                <option value={0}>Employee</option>
                 <option value={1}>Equipment Manager</option>
                 <option value={2}>Administrator</option>
             </select>
