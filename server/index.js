@@ -189,7 +189,7 @@ app.get(
   })
 );
 
-app.get("/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
     const allUsers = await pool.query("SELECT * FROM users");
     res.json(allUsers.rows);
