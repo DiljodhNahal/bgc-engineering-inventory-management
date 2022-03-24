@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { reactLocalStorage } from 'reactjs-localstorage'
 import Table from "../components/Table"
 import Modal from '../components/Modal';
@@ -19,7 +19,6 @@ const ManageUser = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const location = useLocation()
     const navigation = useNavigate()
 
     const toDelete = () => {
@@ -140,7 +139,7 @@ const ManageUser = () => {
 
     const getUsers = async () => {
         try {
-            const response = await fetch("/users");
+            const response = await fetch("/api/users");
             const jsonData = await response.json();
             setUsers(jsonData);
         } catch (err) {
@@ -174,7 +173,7 @@ const ManageUser = () => {
                             <Button onClick={toDeleteAdmin}>Delete</Button>
                         </form>
                     }
-                    handleClose={toggleDeleteModal}
+                    handleClose={toggleDeleteAdminModal}
                 />
             }
 
