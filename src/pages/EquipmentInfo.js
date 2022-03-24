@@ -17,6 +17,7 @@ const EquipmentInfo = () => {
   const [requestor, setRequestor] = useState('')
   const [requestDate, setRequestDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
+  const [isAccepted, setIsAccepted] = useState(false)
 
   const toggleModal = () => {
     setModalStatus(!modalStatus)
@@ -29,6 +30,8 @@ const EquipmentInfo = () => {
     setModalStatus(false)
     alert("Request Sent")
   }
+
+  
 
   useEffect(() => {
     fetch(`/api/search?id=${id}`)
@@ -160,7 +163,7 @@ const EquipmentInfo = () => {
           <button
             onClick={toggleModal}
           >
-            Request Item
+            Request This Item
           </button>
         </ul>
       </div>
