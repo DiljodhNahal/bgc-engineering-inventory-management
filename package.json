@@ -30,6 +30,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
     "react-spinners": "^0.11.0",
+    "react-webcam-barcode-scanner": "^0.0.2-rc2",
     "reactjs-localstorage": "^1.0.1"
   },
   "scripts": {

@@ -5,7 +5,6 @@ import '../styles/pages/SignUp.css'
 
 const Auth = () => {
 
-    const [accountType, setAccountType] = useState(0)
     const [modalStatus, setModalStatus] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -36,11 +35,6 @@ const Auth = () => {
 
     const toggleModal = () => {
         setModalStatus(!modalStatus)
-    }
-
-    const begin = (type) => {
-        setAccountType(type)
-        toggleModal()
     }
 
     return (
@@ -78,8 +72,7 @@ const Auth = () => {
             }
 
             <h2>Login</h2>
-            <Button onClick={() => begin(0)}>Employee</Button>
-            <Button onClick={() => begin(1)}>Manager</Button>
+            <Button onClick={toggleModal}>Login</Button>
 
         </div>
     )
