@@ -6,28 +6,25 @@ li{
     list-style: none;
     display: inline;
 }
-
+label{
+    padding-left: 40px;
+}
 p{
-    height: 150px;
-    width: 375px;
-
+   height: auto;
+   width: auto;
+   position: relative;
+   left: 72px;
+   
 }
 
-.one{
-
-    padding-left: 20px;
-
-}
-.two{
-
-    padding-left: 20px;
-}
 #boxOne{
     text-align: left;
+    padding-left: 20px;
     margin: 10px;
 }
 #boxTwo{
     text-align: left;
+    padding-left: 20px;
     margin: 10px;
 }
 #boxThree{
@@ -36,14 +33,31 @@ p{
     margin: 10px;
 }
 #boxFour{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
 
+}
+#boxFive{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+
+}
+#boxSix{
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px;
+
+}
+#boxSeven{
     text-align: left;
     padding-left: 20px;
     margin: 10px;
 
 }
 .camera{
-    margin-top: 5%;
+    margin-top: 4%;
     margin-left: 15%;
     max-width:30%;
     min-width: 30%;
@@ -60,7 +74,19 @@ p{
 }
 
 #serial{
-    padding-left: 39px;
+    padding-left: 49.5px;
+}
+
+#category{
+    padding-left: 37px;
+}
+
+#productCode{
+    padding-left: 21.5px;
+}
+
+#projectNumber{
+    padding-left: 46px;
 }
 
 .group{
@@ -71,4 +97,14 @@ p{
 #mainBox{
     display: flex;
     flex-wrap: wrap;
+}
+button {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    text-align: center;
+    height: 40px;
+    width: 30%;
+    margin-bottom: 6%;
 }

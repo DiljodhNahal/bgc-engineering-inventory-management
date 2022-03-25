@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from './Layout'
 import Home from './pages/Home'
@@ -11,7 +11,12 @@ import SignUp from './pages/SignUp'
 import Error from './pages/Error'
 import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
-import Modal from './components/Modal'
+import ManageUser from './pages/ManageUser'
+
+import Manage from "./pages/Manage";
+import ListItems from "./pages/ListItems";
+import SignedOutItems from "./pages/SignedOutItems";
+import Requests from "./pages/Requests";
 
 export default function App() {
 
@@ -25,7 +30,12 @@ export default function App() {
                     <Route path={"auth"} element={<Auth />} />
                     <Route path={"signup"} element={<SignUp />} />
                     <Route path={"create"} element={<Create />} />
+                    <Route path={"manageuser"} element={<ManageUser />} />
+                    <Route path={"manage/:id"} element={<Manage />} />
+                    <Route path={"list"} element={<ListItems />} />
+                    <Route path={"signedoutitems"} element={<SignedOutItems/>} />
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
+                    <Route path={"requests"} element={<Requests />}  />       
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>
@@ -34,4 +44,4 @@ export default function App() {
 
 }
 
-ReactDOM.render(<App />, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"));

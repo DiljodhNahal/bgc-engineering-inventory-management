@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { reactLocalStorage } from 'reactjs-localstorage'
 
 import './styles/Main.css'
 import Button from './components/Button'
 import Modal from './components/Modal'
 import Navbar from './components/Navbar'
+import Alert from './components/Alert'
 
 const Layout = () => {
 
     const [loaded, setLoaded] = useState(false)
+    const [alerts, setAlerts] = useState([])
     const [authentication, setAuthentication] = useState()
     const [logoutPending, setLogoutPending] = useState(false)
     const [logoutModal, setLogoutModal] = useState(false)
 
     const navigation = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         fetch(`/api/autheticated`)
@@ -22,12 +26,21 @@ const Layout = () => {
                 setAuthentication(data)
                 if (data.status === false) {
                     navigation('/auth')
+                } else{
+                    reactLocalStorage.set('adminEmail', data.user.email);
+                    reactLocalStorage.set('adminID', data.user.id);
                 }
             })
             .then(() => {
                 setLoaded(true)
             })
     }, [logoutPending])
+
+    useEffect(() => {
+        if (location.state !== null)
+            if (location.state.alerts !== null)
+                setAlerts(location.state.alerts)
+    }, [location.state])
 
     const toggleModal = () => {
         setLogoutModal(!logoutModal)
@@ -48,6 +61,7 @@ const Layout = () => {
             })
     }
 
+
     if (!loaded)
         return null
 
@@ -55,6 +69,10 @@ const Layout = () => {
         <div>
 
             <Navbar authentication={authentication} toggleModal={toggleModal} />
+
+            <div className={'alertContainer'}>
+                {alerts.map(alert => <Alert text={alert.text} type={alert.type} />)}
+            </div>
 
             <div className={'contentContainer'}>
 

@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-pino-logger": "^4.0.0",
+    "moment": "^2.29.1",
     "node-pg-migrate": "^6.2.1",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
@@ -28,7 +29,9 @@
     "react-dom": "^16.13.0",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
-    "react-spinners": "^0.11.0"
+    "react-spinners": "^0.11.0",
+    "react-webcam-barcode-scanner": "^0.0.2-rc2",
+    "reactjs-localstorage": "^1.0.1"
   },
   "scripts": {
     "start": "node server/index.js",
@@ -36,10 +39,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server/index.js",
-    "dev": "run-p server start",
+    "front": "react-scripts --max-http-header-size=1024 start",
+    "dev": "run-p server front",
     "migrate": "node-pg-migrate"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },

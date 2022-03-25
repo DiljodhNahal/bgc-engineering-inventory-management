@@ -2,17 +2,17 @@ import React from 'react'
 import '../styles/pages/Home.css'
 import { ClipLoader } from 'react-spinners'
 
-const Home = () => {
+const Announcement = () => {
 
     return (
     <div>
         <h2 id='title'>Announcements</h2>
         <div id='announceBox'>
-        
+            
         </div>
     </div>
     )
 
 }
 
-export default Home
+export default Announcement

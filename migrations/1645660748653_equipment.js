@@ -5,6 +5,7 @@ exports.shorthands = undefined
 
 exports.up = pgm => {
 
+    
     // For UUID's
     pgm.createExtension("uuid-ossp", {
         ifNotExists: true
