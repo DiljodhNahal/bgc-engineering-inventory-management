@@ -216,21 +216,21 @@ const ManageUser = () => {
                     handleClose={toggleUpdateModal}
                 />
             }
-
+            <h3>Current Account</h3>
             <div className={'manageCurrent'}>
                 <button onClick={() => {
                     setID(reactLocalStorage.get('adminID'))
                     setEmail(reactLocalStorage.get('adminEmail'))
                     setAccountType(2)
                     toggleUpdateModal()
-                }}>Manage Account</button>
+                }}>Manage</button>
                 <button onClick={() => {
                     setID(reactLocalStorage.get('adminID'))
                     setEmail(reactLocalStorage.get('adminEmail'))
                     setAccountType(2)
                     toggleDeleteAdminModal()
                 }}>
-                    Delete Account
+                    Delete
                 </button>
             </div>
 

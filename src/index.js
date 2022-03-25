@@ -12,6 +12,7 @@ import Error from './pages/Error'
 import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
 import ManageUser from './pages/ManageUser'
+
 import Manage from "./pages/Manage";
 import ListItems from "./pages/ListItems";
 
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path={"list"} element={<ListItems />} />
 
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
+                    
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>

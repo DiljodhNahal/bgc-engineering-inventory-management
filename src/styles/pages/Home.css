@@ -1,0 +1,16 @@
+#title{
+    position: relative;
+    left: 200px;
+}
+
+#announceBox{
+    position: center;
+    left: -555px;
+    top: -50px;
+    background-color: lightgrey;
+    width: auto;
+    border: 7.2px solid black;
+    padding: 300px;
+    height: auto;
+    margin-bottom: 10px;
+}
