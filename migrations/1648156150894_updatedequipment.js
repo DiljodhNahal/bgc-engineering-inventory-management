@@ -12,7 +12,7 @@ exports.up = pgm => {
             productCode: { type: 'varchar(255)' },
             location: { type: 'varchar(255)' },
             projectNumber: { type: 'varchar(255)' },
-            warrantyExpiryDate: { type: 'date', notNull: true }
+            warrantyExpiryDate: { type: 'date' }
         });
  
     }
