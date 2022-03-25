@@ -24,7 +24,7 @@ const Dashboard = () => {
                 </div>
                 <div className={'btn-group'}>
                     
-                    <Button onClick={() => navigation('/announcements')}>Announcements</Button>
+                    
                 </div>
 
             </div>
