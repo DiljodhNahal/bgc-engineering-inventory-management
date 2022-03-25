@@ -15,10 +15,10 @@ const Dashboard = () => {
                 <div className={'btn-group'}>
                     <Button onClick={() => navigation('/create')}>Create Inventory</Button>
                     <Button onClick={() => navigation("/list")}>Manage Inventory</Button>
-                    <Button>Pending Requests</Button>
+                    <Button onClick={() => navigation('/requests')}>Pending Requests</Button>
                 </div>
                 <div className={'btn-group'}>
-                    <Button>Signed Out Items</Button>
+                    <Button onClick={() => navigation('/signedoutitems')}>Signed Out Items</Button>
                     <Button onClick={() => navigation('/signup')}>Create Users</Button>
                     <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
                 </div>
