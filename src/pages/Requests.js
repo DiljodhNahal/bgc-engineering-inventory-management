@@ -54,7 +54,7 @@ const Requests = () => {
                     </thead>
 
                     <tbody>
-                            {requests.map((request) => (request.isAccepted == 0) ? (
+                            {requests.map((request) => (request.isAccepted === true) ? (
                                 null
                             ) :
                                 <tr key={request.id}>

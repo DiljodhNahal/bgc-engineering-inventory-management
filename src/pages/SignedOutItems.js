@@ -27,15 +27,16 @@ const SignedOutItems = () => {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Sign Out Date</th>
-                            <th>Expected Return Date</th>
-                            <th>Return Item</th>
-                            <th>Edit Item</th>
+                            <th>Requestor</th>
+                            <th>Start Date</th>
+                            <th>Return Date</th>
+                            <th>Return</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                            {requests.map((request) => (request.isAccepted == 1) ? (
+                            {requests.map((request) => (request.isAccepted === false) ? (
                                 null
                             ) :
                                 <tr key={request.id}>

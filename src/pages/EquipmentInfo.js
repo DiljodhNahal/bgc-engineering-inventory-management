@@ -17,7 +17,7 @@ const EquipmentInfo = () => {
   const [requestor, setRequestor] = useState('')
   const [requestDate, setRequestDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
-  const [isAccepted, setIsAccepted] = useState(1)
+  const [isAccepted, setIsAccepted] = useState(false)
   
 
   const toggleModal = () => {

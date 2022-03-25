@@ -245,7 +245,7 @@ app.post("/api/requests", async (req, res) => {
 app.post('/api/approve/:id', async (req,res) =>{
   try {
     
-    pool.query("UPDATE requests SET isAccepted =0 WHERE id=$1 RETURNING *",[req.params.id], (error,result) =>{
+    pool.query('UPDATE requests SET "isAccepted"=TRUE WHERE id=$1 RETURNING *',[req.params.id], (error,result) =>{
       res.json({message:`Request with ID ${req.params.id} approved`, status:200})
     });
     
