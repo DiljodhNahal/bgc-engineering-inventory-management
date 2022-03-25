@@ -135,7 +135,7 @@ const EquipmentInfo = () => {
               </label>{" "}
               {equipment.color}
             </li>
-            <li className={"one"} id="serial">
+            <li className={"two"} id={"serial"}>
               <label>
                 <strong>Serial Number:</strong>
               </label>{" "}
@@ -144,7 +144,7 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxTwo"}>
-            <li className={"two"}>
+            <li className={"one"}>
               <label>
                 <strong>Price:</strong>
               </label>{" "}
@@ -158,8 +158,63 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          <div id={"boxThree"}>
-            <li className={"three"}>
+          <div id={"boxFour"}>
+          <li className={"one"}>
+              <label>
+                <strong>Item Type:</strong>
+              </label>{" "}
+              {equipment.type}
+            </li>
+            <li className={"two"}id={"category"}>
+              <label>
+                <strong>Category:</strong>
+              </label>{" "}
+              {equipment.category}
+            </li>
+          </div>
+
+          <div id={"boxFive"}>
+          <li className={"one"}>
+              <label>
+                <strong>Item Status:</strong>
+              </label>{" "}
+              {equipment.status}
+            </li>
+            <li className={"two"}id={"productCode"}>
+              <label>
+                <strong>Product Code:</strong>
+              </label>{" "}
+              {equipment.productCode}
+            </li>
+          </div>
+          
+          <div id={"boxSix"}>
+            <li className={"one"}>
+              <label>
+                <strong>Location:</strong>
+              </label>{" "}
+              {equipment.location}
+            </li>
+            <li className={"two"}id={"projectNumber"}>
+              <label>
+                <strong>Project Number:</strong>
+              </label>{" "}
+              {equipment.projectNumber}
+            </li>
+          </div>
+
+          <div id={"boxSix"}>
+            <li className={"one"}>
+              <label>
+                <strong>Warranty Expiry:</strong>
+              </label>{" "}
+              {equipment.warrantyExpiryDate}
+            </li>
+          </div>
+
+          
+          <div id={"boxSeven"}>
+            <li className={"one"}>
               <label>
                 <strong>Barcode:</strong>
               </label>{" "}
@@ -167,9 +222,8 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          <div id={"boxFour"}>
-            <li className={"four"}>
-
+          <div id={"boxThree"}>
+            <li className={"one"}>
               <label>
                 <strong>Description:</strong>
               </label>

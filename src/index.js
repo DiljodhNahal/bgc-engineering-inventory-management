@@ -12,6 +12,7 @@ import Error from './pages/Error'
 import Create from './pages/Create'
 import EquipmentInfo from './pages/EquipmentInfo'
 import ManageUser from './pages/ManageUser'
+
 import Manage from "./pages/Manage";
 import ListItems from "./pages/ListItems";
 import SignedOutItems from "./pages/SignedOutItems";
@@ -34,7 +35,7 @@ export default function App() {
                     <Route path={"list"} element={<ListItems />} />
                     <Route path={"signedoutitems"} element={<SignedOutItems/>} />
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
-                    <Route path={"requests"} element={<Requests/>} />
+                    <Route path={"requests"} element={<Requests />}  />       
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>
