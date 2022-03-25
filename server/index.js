@@ -165,16 +165,23 @@ app.post(
 app.get(
   "/api/autheticated",
   asyncHandler(async (req, res) => {
-    let response = {
-      status: req.isAuthenticated(),
-    };
-    if (req.isAuthenticated()){
-      response.user = req.user;
-    }
+    try {
+      let response = {
+        status: req.isAuthenticated(),
+      };
+      if (req.isAuthenticated()){
+        response.user = req.user;
+      }
 
-    res.json(response);
-  })
-);
+      res.json(response);
+    }
+    catch (error) {
+      console.log(error)
+    }
+       
+
+
+  }));
 
 // Logs Out The User
 app.get(
@@ -210,15 +217,17 @@ app.get("/api/requests", async (req, res) => {
 app.post("/api/requests", async (req, res) => {
   try {
     const {
+      itemId,
       name,
       requestor,
       requestDate,
       returnDate,
       isAccepted,
     } = req.body;
-    const newItem = await pool.query(
-      'INSERT INTO requests (name, requestor, "requestDate", "returnDate", isAccepted) VALUES($1, $2, $3, $4, $5) RETURNING *',
+    const newRequest = await pool.query(
+      'INSERT INTO requests ("itemId", name, requestor, "requestDate", "returnDate", "isAccepted") VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
       [
+        itemId,
         name,
         requestor,
         requestDate,
@@ -226,20 +235,33 @@ app.post("/api/requests", async (req, res) => {
         isAccepted,
       ]
     );
-    res.json(newItem.rows[0]);
+    res.json(newRequest.rows[0]);
   } catch (exception) {
     throw new Error(exception.message);
   }
 });
 
-app.get("/api/signedout/:isAccepted", async (req, res) => {
+app.post('/api/approve/:id', async (req,res) =>{
   try {
-    const allSignedOut = await pool.query("SELECT * FROM requests WHERE isAccepted=$1", [req.params.isAccepted]);
-    res.json(allSignedOut.rows);
-  } catch (err) {
-    console.error(err.message);
+    
+    pool.query("UPDATE requests SET isAccepted =0 WHERE id=$1 RETURNING *",[req.params.id], (error,result) =>{
+      res.json({message:`Request with ID ${req.params.id} approved`, status:200})
+    });
+    
+  } catch (error) {
+    console.error(error);
   }
-});
+})
+
+app.post("/api/requests/delete/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM requests WHERE id=$1", [req.params.id])
+    res.status(204).send('Request Deleted');
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
 
 app.get("/items", async (req, res) => {
   try {
