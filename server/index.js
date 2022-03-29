@@ -170,7 +170,7 @@ app.get(
       let response = {
         status: req.isAuthenticated(),
       };
-      if (req.isAuthenticated()){
+      if (req.isAuthenticated()) {
         response.user = req.user;
       }
 
@@ -179,7 +179,7 @@ app.get(
     catch (error) {
       console.log(error)
     }
-       
+
 
 
   }));
@@ -242,13 +242,13 @@ app.post("/api/requests", async (req, res) => {
   }
 });
 
-app.post('/api/approve/:id', async (req,res) =>{
+app.post('/api/approve/:id', async (req, res) => {
   try {
-    
-    pool.query('UPDATE requests SET "isAccepted"=TRUE WHERE id=$1 RETURNING *',[req.params.id], (error,result) =>{
-      res.json({message:`Request with ID ${req.params.id} approved`, status:200})
+
+    pool.query('UPDATE requests SET "isAccepted"=TRUE WHERE id=$1 RETURNING *', [req.params.id], (error, result) => {
+      res.json({ message: `Request with ID ${req.params.id} approved`, status: 200 })
     });
-    
+
   } catch (error) {
     console.error(error);
   }
@@ -397,7 +397,7 @@ app.post("/info/:id", async (req, res) => {
         id,
       ]
     )
-    
+
 
     res.json(updatedItem.rows[0]);
   } catch (err) {

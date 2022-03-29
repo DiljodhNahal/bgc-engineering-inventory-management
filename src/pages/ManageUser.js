@@ -127,12 +127,28 @@ const ManageUser = () => {
     }
 
     const checkEmailExists = () => {
-        for (let i = 0; i < users.length; i++) {
-            if ((users[i].email === email) && (email !== reactLocalStorage.get('adminEmail'))) {
-                alert("Email already exists")
-                return true
+        var counter = 1
+        if (accountType === 2) {
+            console.log(accountType)
+            for (let i = 0; i < users.length; i++) {
+                if ((users[i].email === email) && (email !== reactLocalStorage.get('adminEmail'))) {
+                    alert("Email already exists")
+                    counter = 0
+                    break
+                }
             }
         }
+
+        else {
+            for (let i = 0; i < users.length; i++) {
+                if ((users[i].email === email)) {
+                    counter += 1;
+                }
+            }
+        }
+
+        if (counter > 2 && counter < 1)
+            return true
 
         return false
     }
