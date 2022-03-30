@@ -3,10 +3,28 @@ import '../styles/pages/Home.css'
 import Table from '../components/Table';
 
 
-const HomePage = () => {
+const DeleteAnnounce = () => {
 
     const [announcements, setAnnouncement] = useState([]);
-    
+   
+
+    const toDelete = (id) => {
+        
+        try {
+            fetch(
+                `/api/announcements/delete/${id}`,
+                {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(response => {
+                    window.location.reload(true)
+                    console.log(response)
+                })
+        } catch (exception) {
+            console.error(exception.message)
+        }
+    }
     const getAnnouncements = async () => {
         try {
             const response = await fetch("/api/announcements");
@@ -22,7 +40,6 @@ const HomePage = () => {
     }, []);
     return (
     <div>
-      
             <div id={'announcementBox'}>
             <Table
               content={
@@ -31,6 +48,7 @@ const HomePage = () => {
                     <tr>
                         <th></th>
                         <th>Announcements</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
@@ -41,6 +59,12 @@ const HomePage = () => {
                          <tr key={announcement.id}>
                         <td></td>
                         <td>{announcement.announcement}</td>
+                        <td><button onClick={() => {
+                                            toDelete(announcement.id)
+                                        }}>
+                                            Delete
+                                        </button>
+                        </td>
                     </tr>
                      ))}   
                 </tbody>
@@ -53,4 +77,4 @@ const HomePage = () => {
 
 }
 
-export default HomePage
+export default DeleteAnnounce

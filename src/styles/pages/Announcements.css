@@ -1,8 +1,17 @@
 
 
-#announcementBox{
-    display: inline-block;
+#createAnnouncement{
+    
+   text-align: center;
+    
 }
+
+#announcement{
+   
+    width: 30em;
+    height: 200px;
+}
+
 
 
 

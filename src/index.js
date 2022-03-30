@@ -17,7 +17,8 @@ import Manage from "./pages/Manage";
 import ListItems from "./pages/ListItems";
 import SignedOutItems from "./pages/SignedOutItems";
 import Requests from "./pages/Requests";
-
+import Announcement from "./pages/Announcement";
+import DeleteAnnounce from "./pages/DeleteAnnounce";
 export default function App() {
 
     return (
@@ -35,7 +36,9 @@ export default function App() {
                     <Route path={"list"} element={<ListItems />} />
                     <Route path={"signedoutitems"} element={<SignedOutItems/>} />
                     <Route path={"info/:id"} element={<EquipmentInfo />} />
-                    <Route path={"requests"} element={<Requests />}  />       
+                    <Route path={"requests"} element={<Requests />}  /> 
+                    <Route path={"announcements"} element={<Announcement/>} />    
+                    <Route path={"announcement"} element={<DeleteAnnounce/>} />    
                 </Route>
                 <Route path={"/error/:code"} element={<Error />} />
             </Routes>
