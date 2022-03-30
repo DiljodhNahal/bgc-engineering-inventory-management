@@ -23,7 +23,8 @@ const Dashboard = () => {
                     <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
                 </div>
                 <div className={'btn-group'}>
-                    
+                <Button onClick={() => navigation('/announcements')}>New Announcements</Button>
+                <Button onClick={() => navigation('/announcement')}>Manage Announcements</Button>
                     
                 </div>
 
