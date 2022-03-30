@@ -1,13 +1,7 @@
-
-
 #createAnnouncement{
-    
-   text-align: center;
-    
+   text-align: center; 
 }
-
-#announcement{
-   
+#announcement{ 
     width: 30em;
     height: 200px;
 }

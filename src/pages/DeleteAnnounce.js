@@ -7,7 +7,6 @@ const DeleteAnnounce = () => {
 
     const [announcements, setAnnouncement] = useState([]);
    
-
     const toDelete = (id) => {
         
         try {
@@ -40,41 +39,37 @@ const DeleteAnnounce = () => {
     }, []);
     return (
     <div>
-            <div id={'announcementBox'}>
-            <Table
-              content={
-                <React.Fragment>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Announcements</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
+        <div id={'announcementBox'}>
+        <Table content={
+        <React.Fragment>
+            <thead>
+                <tr>
+                    <th>Announcements</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
 
-                 <tbody>
-                     {announcements.map((announcement) =>(
-                         
-                     
-                         <tr key={announcement.id}>
-                        <td></td>
-                        <td>{announcement.announcement}</td>
-                        <td><button onClick={() => {
-                                            toDelete(announcement.id)
-                                        }}>
-                                            Delete
-                                        </button>
-                        </td>
-                    </tr>
-                     ))}   
-                </tbody>
-                </React.Fragment>
-                }
-            ></Table>
+            <tbody>
+            {announcements.map((announcement) =>(
+                <tr key={announcement.id}>
+                    <td></td>
+                    <td>{announcement.announcement}</td>
+                    <td>
+                        <button onClick={() => {
+                        toDelete(announcement.id)}}>
+                        
+                        Delete
+                        </button>
+                    </td>
+                </tr>
+                ))}   
+            </tbody>
+            </React.Fragment>
+        }
+        ></Table>
         </div>
     </div>
     )
-
 }
 
 export default DeleteAnnounce

@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import Button from '../components/Button';
-
 import '../styles/pages/Announcements.css'
 
 const Announcement = () => {
     const [announcement, setAnnouncement] = useState()
-   
-
- 
 
     const create = async (e) => {
-    
       e.preventDefault();
       try {
           const body = {
@@ -31,49 +26,26 @@ const Announcement = () => {
           console.error(err.message);
       }
   }
-
-  const deleteAnnouncement = (id) => {
-    try {
-        fetch(
-            `/api/announcement/delete/${id}`,
-            {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-            })
-            .then(response => {
-                window.location.reload(true)
-                console.log(response)
-            })
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-    return (
-        <div>
-          
-            <div id='createAnnouncement'>
-            <h3 className='title'>New Announcement</h3>
-                            <form onSubmit={create}>
+  
+  return (
+      <div>
+        <div id='createAnnouncement'>
+          <h3 className='title'>New Announcement</h3>
+          <form onSubmit={create}>
+            <textarea
+              type={'text'}
+              className={'text'}
+              id={'announcement'}
+              value={announcement}
+              onChange={event => setAnnouncement(event.target.value)}
+              placeholder={'Announcements'}
+              required/>
+            <br />
+              <Button id={"createBtn"} onClick={create} size={'large'} >Create Announcement</Button>
                                  
-                                 <textarea
-                                    type={'text'}
-                                    className={'text'}
-                                    id={'announcement'}
-                                    value={announcement}
-                                    onChange={event => setAnnouncement(event.target.value)}
-                                    placeholder={'Announcements'}
-                                    required/>
-                                <br />
-                                 <Button id={"createBtn"} onClick={create} size={'large'} >Create Announcement</Button>
-                                 
-                            </form>
-                        
-                    
-                             
-            </div>
-            
-        </div>  
+          </form>
+         </div>
+      </div>  
     )
 }
 export default Announcement
