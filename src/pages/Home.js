@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../styles/pages/Home.css'
 import Table from '../components/Table';
-
 
 const HomePage = () => {
 
@@ -21,36 +19,29 @@ const HomePage = () => {
         getAnnouncements();
     }, []);
     return (
-    <div>
-      
+        <div>
             <div id={'announcementBox'}>
-            <Table
-              content={
+                <Table content={
                 <React.Fragment>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Announcements</th>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>Announcements</th>
+                        </tr>
+                    </thead>
 
-                 <tbody>
-                     {announcements.map((announcement) =>(
-                         
-                     
-                         <tr key={announcement.id}>
-                        <td></td>
-                        <td>{announcement.announcement}</td>
-                    </tr>
-                     ))}   
-                </tbody>
-                </React.Fragment>
+                    <tbody>
+                        {announcements.map((announcement) =>(
+
+                        <tr key={announcement.id}>
+                            <td>{announcement.announcement}</td>
+                        </tr>
+                        ))}   
+                    </tbody>
+                    </React.Fragment>
                 }
-            ></Table>
+                ></Table>
+            </div>
         </div>
-    </div>
     )
-
 }
-
 export default HomePage
