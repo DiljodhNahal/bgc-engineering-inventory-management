@@ -14,7 +14,6 @@ const Dashboard = () => {
             <div className={'btn-container'}>
                 <div className={'btn-group'}>
                     <Button onClick={() => navigation('/create')}>Create Inventory</Button>
-                    <Button onClick={() => navigation("/list")}>Manage Inventory</Button>
                     <Button onClick={() => navigation('/requests')}>Pending Requests</Button>
                 </div>
                 <div className={'btn-group'}>
