@@ -249,7 +249,7 @@ const EquipmentInfo = ({ authentication }) => {
                     navigation(`/manage/${id}`);
                   }}
                 >
-                  Edit Item Attributes
+                  Edit Item
                 </button>
                 <button
                   className="eqbutton"
@@ -260,8 +260,8 @@ const EquipmentInfo = ({ authentication }) => {
                         headers: { "Content-Type": "application/json" },
                       }).then((response) => {
                         response.json()
+                        navigation('/')
                         window.location.reload(true)
-                        navigation(`/`);
                         console.log(response);
                       });
                     } catch (error) {
@@ -274,13 +274,7 @@ const EquipmentInfo = ({ authentication }) => {
               </>
             )}
 
-          <button className="eqbutton"
-            onClick={() => {
-              navigation(`/manage/${id}`);
-            }}
-          >
-            Edit Item
-          </button>
+        
           <button className="eqbutton"
             onClick={toggleModal}
           >
