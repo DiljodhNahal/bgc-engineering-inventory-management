@@ -231,14 +231,14 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          <button
+          <button className="eqbutton"
             onClick={() => {
               navigation(`/manage/${id}`);
             }}
           >
             Edit Item Attributes
           </button>
-          <button
+          <button className="eqbutton"
             onClick={toggleModal}
           >
             Request This Item

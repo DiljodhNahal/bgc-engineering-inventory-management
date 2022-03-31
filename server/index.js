@@ -450,6 +450,40 @@ app.post("/api/info/:id", async (req, res) => {
   }
 });
 
+app.post("/api/announce", async (req, res) => {
+  try {
+    const {announcement} = req.body;
+    const newAnnouncement = await pool.query(
+      'INSERT INTO announcements(announcement) VALUES($1) RETURNING *',
+      [
+        announcement
+      ]
+    )
+    res.json(newAnnouncement.rows[0]);
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+});
+
+app.get("/api/announcements", async (req, res) => {
+  try {
+    const allAnnouncements = await pool.query("SELECT * FROM announcements");
+    res.json(allAnnouncements.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.post("/api/announcements/delete/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM announcements WHERE id=$1", [req.params.id])
+    res.status(204).send('Announcement Deleted');
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+
 const buildPath = path.join(__dirname, "..", "build");
 app.use(express.static(buildPath));
 app.get("*", function (req, res) {
