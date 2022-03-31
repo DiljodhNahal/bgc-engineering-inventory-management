@@ -4,7 +4,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
-import { reactLocalStorage } from 'reactjs-localstorage'
+
 
 const EquipmentInfo = () => {
   let { id } = useParams();
@@ -17,7 +17,8 @@ const EquipmentInfo = () => {
   const [requestDate, setRequestDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
   const [isAccepted, setIsAccepted] = useState(false)
-  
+  const [users, setUsers] = useState([]);
+
 
   const toggleModal = () => {
     setModalStatus(!modalStatus)
@@ -27,7 +28,7 @@ const EquipmentInfo = () => {
     console.log(equipment.id)
     let name = equipment.name
     let itemId = equipment.id
-  
+
     try {
       const body = {
         itemId,
@@ -52,18 +53,31 @@ const EquipmentInfo = () => {
       console.error(err.message);
     }
 
-      
+
   }
 
+  const getUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      const jsonData = await response.json();
+      setUsers(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
-
-  useEffect(() => {
+  const getSearch = () => {
     fetch(`/api/search?id=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setEquipment(data.results[0]);
         setLoaded(true);
       });
+  }
+
+  useEffect(() => {
+    getSearch();
+    getUsers();
   }, []);
 
   if (!loaded) return null;
@@ -78,15 +92,16 @@ const EquipmentInfo = () => {
             <form className={'createForm'} onSubmit={sendRequest}>
               <h3>Request {equipment.name}</h3>
               <h5>Enter Employee Name:</h5>
-              <input
-                type={'text'}
-                className={'requesting-employee'}
-                id={'requesting-employee'}
+              <select
                 value={requestor}
                 onChange={event => setRequestor(event.target.value)}
-                placeholder={'Enter Employee Name'}
-                required
-              />
+              >
+                {users.map((user) => (user.accountType === 0) ? (
+                  <option key={user.id}>{user.email}</option>
+                ) :
+                  null)}
+
+              </select>
 
               <h5>Enter Requested Date:</h5>
               <input
@@ -158,13 +173,13 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxFour"}>
-          <li className={"one"}>
+            <li className={"one"}>
               <label>
                 <strong>Item Type:</strong>
               </label>{" "}
               {equipment.type}
             </li>
-            <li className={"two"}id={"category"}>
+            <li className={"two"} id={"category"}>
               <label>
                 <strong>Category:</strong>
               </label>{" "}
@@ -173,20 +188,20 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxFive"}>
-          <li className={"one"}>
+            <li className={"one"}>
               <label>
                 <strong>Item Status:</strong>
               </label>{" "}
               {equipment.status}
             </li>
-            <li className={"two"}id={"productCode"}>
+            <li className={"two"} id={"productCode"}>
               <label>
                 <strong>Product Code:</strong>
               </label>{" "}
               {equipment.productCode}
             </li>
           </div>
-          
+
           <div id={"boxSix"}>
             <li className={"one"}>
               <label>
@@ -194,7 +209,7 @@ const EquipmentInfo = () => {
               </label>{" "}
               {equipment.location}
             </li>
-            <li className={"two"}id={"projectNumber"}>
+            <li className={"two"} id={"projectNumber"}>
               <label>
                 <strong>Project Number:</strong>
               </label>{" "}
@@ -211,7 +226,7 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          
+
           <div id={"boxSeven"}>
             <li className={"one"}>
               <label>
@@ -236,7 +251,7 @@ const EquipmentInfo = () => {
               navigation(`/manage/${id}`);
             }}
           >
-            Edit Item Attributes
+            Edit Item
           </button>
           <button className="eqbutton"
             onClick={toggleModal}

@@ -3,44 +3,45 @@ import Button from "../components/Button";
 import Table from "../components/Table";
 import moment from "moment";
 import Modal from "../components/Modal";
-import { useParams } from "react-router-dom";
+
 
 
 
 const SignedOutItems = () => {
-    
+
     const [requests, setRequests] = useState([]);
     const [requestor, setRequestor] = useState('')
     const [requestDate, setRequestDate] = useState('')
     const [returnDate, setReturnDate] = useState('')
     const [modalStatus, setModalStatus] = useState(false)
-    let { id } = useParams();
+    const [tableID, setTableID] = useState(0)
+    const [itemName, setItemName] = useState('')
+
 
     const toggleModal = () => {
         setModalStatus(!modalStatus)
     }
-    
-    const completeEdit = (id) => {
-        console.log(id)
-        /*try {
-            
-          const body = {
-            requestor,
-            requestDate,
-            returnDate,
-            id,
-          };
-          fetch(`/api/signedout/edit/${id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          })
-            .then(() => window.location.reload(true));
+
+    const completeEdit = () => {
+        console.log(tableID)
+        try {
+
+            const body = {
+                requestor,
+                requestDate,
+                returnDate,
+            };
+            fetch(`/api/signedout/edit/${tableID}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            })
+                .then(() => window.location.reload(true));
         } catch (err) {
-          console.error(err.message);
-        }*/
+            console.error(err.message);
+        }
     };
-    
+
     const getRequests = async () => {
         try {
             const response = await fetch("/api/requests");
@@ -74,73 +75,73 @@ const SignedOutItems = () => {
     }, []);
 
     return (
-        <div>                        
-           
-        {modalStatus &&
+        <div>
+
+            {modalStatus &&
                 <Modal
-                content={
-                    
-                    <form className={'createForm'} onSubmit={() => completeEdit(id)}>
-                    <h3>Edit </h3>
-                    <h5>Enter Employee Name:</h5>
-                    <input
-                        type={'text'}
-                        className={'requesting-employee'}
-                        id={'requesting-employee'}
-                        value={requestor}
-                        name={'requestor'}
-                        onChange={event => setRequestor(event.target.value)}
-                        /*placeholder={request.name}*/
-                        required
-                    />
-        
-                    <h5>Enter Requested Date:</h5>
-                    <input
-                        type={'date'}
-                        id={'requestDate'}
-                        className={'requestDate'}
-                        name={'requestDate'}
-                        value={requestDate}
-                        onChange={event => setRequestDate(event.target.value)}
-                        /*placeholder={request.requestDate}*/
-                        required
-                    />
-        
-                    <h5>Enter Requested Return Date:</h5>
-                    <input
-                        type={'date'}
-                        id={'returnDate'}
-                        className={'returnDate'}
-                        name={'returnDate'}
-                        value={returnDate}
-                        onChange={event => setReturnDate(event.target.value)}
-                        /*placeholder={request.returnDate}*/
-                        required
-                    />
-                    <br></br>
-                    <Button  size={'small'} type="submit" >Finish Edit</Button>
-                    <button type="submit">edit</button>
-                    </form>
-                }
-                handleClose={toggleModal}
+                    content={
+
+                        <form className={'createForm'} onSubmit={() => completeEdit()}>
+                            <h3>Edit {itemName}</h3>
+                            <h5>Enter Employee Name:</h5>
+
+                            <input
+                                type={'text'}
+                                className={'requesting-employee'}
+                                id={'requesting-employee'}
+                                value={requestor}
+                                name={'requestor'}
+                                onChange={event => setRequestor(event.target.value)}
+                                placeholder={requestor}
+                                required
+                            />
+
+                            <h5>Enter Requested Date:</h5>
+                            <input
+                                type={'date'}
+                                id={'requestDate'}
+                                className={'requestDate'}
+                                name={'requestDate'}
+                                value={requestDate}
+                                onChange={event => setRequestDate(event.target.value)}
+                                placeholder={requestDate}
+                                required
+                            />
+
+                            <h5>Enter Requested Return Date:</h5>
+                            <input
+                                type={'date'}
+                                id={'returnDate'}
+                                className={'returnDate'}
+                                name={'returnDate'}
+                                value={returnDate}
+                                onChange={event => setReturnDate(event.target.value)}
+                                placeholder={returnDate}
+                                required
+                            />
+                            <br></br>
+                            <button type="submit">Finish Edit</button>
+                        </form>
+                    }
+                    handleClose={toggleModal}
                 />
             }
 
-        <Table
-            content={
-                <React.Fragment>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Requestor</th>
-                            <th>Start Date</th>
-                            <th>Return Date</th>
-                            <th>Return</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
+            <Table
+                content={
+                    <React.Fragment>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Requestor</th>
+                                <th>Start Date</th>
+                                <th>Return Date</th>
+                                <th>Return</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
                             {requests.map((request) => (request.isAccepted === false) ? (
                                 null
                             ) :
@@ -151,22 +152,29 @@ const SignedOutItems = () => {
                                     <td>{moment.utc(request.returnDate).format("YYYY-MM-DD")}</td>
                                     <td>
                                         <Button size={'small'} onClick={() => {
-                                        returnItem(request.id)
-                                    }}>
+                                            returnItem(request.id)
+                                        }}>
                                             Return
                                         </Button>
                                     </td>
                                     <td>
-                                        <Button size={'small'} onClick={toggleModal}>
+                                        <Button size={'small'} onClick={() => {
+                                            setTableID(request.id)
+                                            setRequestor(request.requestor)
+                                            setRequestDate(request.requestDate)
+                                            setReturnDate(request.returnDate)
+                                            setItemName(request.name)
+                                            toggleModal()
+                                        }}>
                                             Edit
                                         </Button>
                                     </td>
                                 </tr>
                             )}
                         </tbody>
-                </React.Fragment>
-            }
-        ></Table>
+                    </React.Fragment>
+                }
+            ></Table>
         </div>
     )
 }
