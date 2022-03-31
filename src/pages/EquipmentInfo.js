@@ -4,7 +4,6 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
 import { reactLocalStorage } from 'reactjs-localstorage'
 
 const EquipmentInfo = () => {
@@ -76,7 +75,7 @@ const EquipmentInfo = () => {
       {modalStatus &&
         <Modal
           content={
-            <form className={'createForm'}>
+            <form className={'createForm'} onSubmit={sendRequest}>
               <h3>Request {equipment.name}</h3>
               <h5>Enter Employee Name:</h5>
               <input
@@ -111,7 +110,7 @@ const EquipmentInfo = () => {
                 required
               />
               <br></br>
-              <Button onClick={sendRequest} size={'small'} >Send Request</Button>
+              <button type="submit">Send Request</button>
             </form>
           }
           handleClose={toggleModal}

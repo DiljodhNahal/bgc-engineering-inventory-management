@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Button from "../components/Button";
 import Table from "../components/Table";
+import moment from "moment";
 
 const Requests = () => {
 
@@ -73,10 +74,10 @@ const Requests = () => {
                             null
                         ) :
                             <tr key={request.id}>
-                                <td>{request.name}{request.isAccepted}</td>
+                                <td>{request.name}</td>
                                 <td>{request.requestor}</td>
-                                <td>{request.requestDate}</td>
-                                <td>{request.returnDate}</td>
+                                <td>{moment.utc(request.requestDate).format("YYYY-MM-DD")}</td>
+                                <td>{moment.utc(request.returnDate).format("YYYY-MM-DD")}</td>
                                 <td>
                                     <Button size={'small'} onClick={() => approveRequest(request.id)}>
                                         Approve

@@ -263,6 +263,40 @@ app.post("/api/requests/delete/:id", async (req, res) => {
   }
 })
 
+app.post("/api/signedout/return/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM requests WHERE id=$1", [req.params.id])
+    res.status(204).send('Item Returned');
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+app.post("/api/signedout/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      requestor,
+      requestDate,
+      returnDate,
+    } = req.body;
+    const editedItem = await pool.query(
+      'UPDATE requests SET requestor =$1, "requestDate" =$2, "returnDate" =$3 WHERE id =$4',
+      [
+        requestor,
+        requestDate,
+        returnDate,
+        id,
+      ]
+    )
+
+
+    res.json(editedItem.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 
 app.get("/items", async (req, res) => {
   try {
