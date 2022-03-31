@@ -4,8 +4,6 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
-import { reactLocalStorage } from "reactjs-localstorage";
 
 const EquipmentInfo = ({ authentication }) => {
   let { id } = useParams();
@@ -13,20 +11,22 @@ const EquipmentInfo = ({ authentication }) => {
 
   const [loaded, setLoaded] = useState(false);
   const [equipment, setEquipment] = useState();
-  const [modalStatus, setModalStatus] = useState(false);
-  const [requestor, setRequestor] = useState("");
-  const [requestDate, setRequestDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
-  const [isAccepted, setIsAccepted] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false)
+  const [requestor, setRequestor] = useState('')
+  const [requestDate, setRequestDate] = useState('')
+  const [returnDate, setReturnDate] = useState('')
+  const [isAccepted, setIsAccepted] = useState(false)
+  const [users, setUsers] = useState([]);
+
 
   const toggleModal = () => {
     setModalStatus(!modalStatus);
   };
 
   const sendRequest = () => {
-    console.log(equipment.id);
-    let name = equipment.name;
-    let itemId = equipment.id;
+    console.log(equipment.id)
+    let name = equipment.name
+    let itemId = equipment.id
 
     try {
       const body = {
@@ -51,15 +51,32 @@ const EquipmentInfo = ({ authentication }) => {
     } catch (err) {
       console.error(err.message);
     }
-  };
 
-  useEffect(() => {
+
+  }
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      const jsonData = await response.json();
+      setUsers(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  const getSearch = () => {
     fetch(`/api/search?id=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setEquipment(data.results[0]);
         setLoaded(true);
       });
+  }
+
+  useEffect(() => {
+    getSearch();
+    getUsers();
   }, []);
 
   if (!loaded) return null;
@@ -69,18 +86,19 @@ const EquipmentInfo = ({ authentication }) => {
       {modalStatus && (
         <Modal
           content={
-            <form className={"createForm"}>
+            <form className={'createForm'} onSubmit={sendRequest}>
               <h3>Request {equipment.name}</h3>
               <h5>Enter Employee Name:</h5>
-              <input
-                type={"text"}
-                className={"requesting-employee"}
-                id={"requesting-employee"}
+              <select
                 value={requestor}
-                onChange={(event) => setRequestor(event.target.value)}
-                placeholder={"Enter Employee Name"}
-                required
-              />
+                onChange={event => setRequestor(event.target.value)}
+              >
+                {users.map((user) => (user.accountType === 0) ? (
+                  <option key={user.id}>{user.email}</option>
+                ) :
+                  null)}
+
+              </select>
 
               <h5>Enter Requested Date:</h5>
               <input
@@ -104,9 +122,7 @@ const EquipmentInfo = ({ authentication }) => {
                 required
               />
               <br></br>
-              <Button onClick={sendRequest} size={"small"}>
-                Send Request
-              </Button>
+              <button type="submit">Send Request</button>
             </form>
           }
           handleClose={toggleModal}
@@ -258,8 +274,17 @@ const EquipmentInfo = ({ authentication }) => {
               </>
             )}
 
-          <button className="eqbutton" onClick={toggleModal}>
-            Request Item
+          <button className="eqbutton"
+            onClick={() => {
+              navigation(`/manage/${id}`);
+            }}
+          >
+            Edit Item
+          </button>
+          <button className="eqbutton"
+            onClick={toggleModal}
+          >
+            Request This Item
           </button>
         </ul>
       </div>
