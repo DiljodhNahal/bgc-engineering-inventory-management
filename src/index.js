@@ -15,7 +15,6 @@ import EquipmentInfo from "./pages/EquipmentInfo";
 import ManageUser from "./pages/ManageUser";
 
 import Manage from "./pages/Manage";
-import ListItems from "./pages/ListItems";
 import SignedOutItems from "./pages/SignedOutItems";
 import Requests from "./pages/Requests";
 import Announcement from "./pages/Announcement";
@@ -49,7 +48,6 @@ export default function App() {
           <Route path={"create"} element={<Create />} />
           <Route path={"manageuser"} element={<ManageUser />} />
           <Route path={"manage/:id"} element={<Manage />} />
-          <Route path={"list"} element={<ListItems />} />
           <Route path={"signedoutitems"} element={<SignedOutItems />} />
           <Route
             path={"info/:id"}
