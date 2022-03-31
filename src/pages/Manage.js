@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../styles/pages/Create.css";
 import { useParams } from "react-router-dom";
-import moment from 'moment';
+
 
 const Manage = () => {
   const [loaded, setLoaded] = useState(false);
   const [equipment, setEquipment] = useState();
   let { id } = useParams();
-  
+
   const [name, setName] = useState("");
   const [purchaseDate, setPurchaseDate] = useState();
   const [price, setPrice] = useState();
@@ -33,7 +33,7 @@ const Manage = () => {
   }, []);
 
   if (!loaded) return null;
-  
+
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
@@ -72,7 +72,7 @@ const Manage = () => {
         <div>
           <div className="title">Item Name</div>
           <input
-            
+
             onChange={(e) => setName(e.target.value)}
             id="name"
             type="text"
@@ -88,7 +88,7 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Purchase Date</div>
             <input
-             value={purchaseDate}
+              value={purchaseDate}
               onChange={(e) => setPurchaseDate(e.target.value)}
               id="purchaseDate"
               type="date"
@@ -102,7 +102,7 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Purchase Price</div>
             <input
-             
+
               onChange={(e) => setPrice(e.target.value)}
               id="price"
               type="number"
@@ -118,7 +118,7 @@ const Manage = () => {
         <div>
           <div className="descriptionTitle">Item Description</div>
           <textarea
-          
+
             onChange={(e) => setDescription(e.target.value)}
             id="description"
             name="description"
@@ -134,7 +134,7 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Serial Number</div>
             <input
-             
+
               onChange={(e) => setSerialNumber(e.target.value)}
               id="serialNumber"
               type="text"
@@ -173,7 +173,7 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Item Type</div>
             <input
-             
+
               onChange={(e) => setType(e.target.value)}
               id="type"
               type="text"
@@ -186,7 +186,7 @@ const Manage = () => {
           <div>
             <div className="smallTitle">Category</div>
             <input
-             
+
               onChange={(e) => setCategory(e.target.value)}
               id="category"
               type="text"
@@ -281,7 +281,7 @@ const Manage = () => {
           </div>
         </div>
         <div id="scanRow">
-          <button id="scan-button" onClick={() => {}}>
+          <button id="scan-button" onClick={() => { }}>
             Rescan Item
           </button>
         </div>
