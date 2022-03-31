@@ -445,6 +445,7 @@ app.post("/api/info/:id", async (req, res) => {
     await pool.query("DELETE FROM equipment WHERE id = $1", [
       id
     ]);
+    res.json({ redirect: true });
   } catch (err) {
     console.log(err.message);
   }

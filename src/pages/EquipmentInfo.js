@@ -65,6 +65,26 @@ const EquipmentInfo = ({ authentication }) => {
     }
   }
 
+  const deleteItem = (id) => {
+
+    try {
+      fetch(`/api/info/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.redirect === true) {
+            navigation('/')
+          } else {
+            alert('An Unexpected Error Has Occurred!')
+          }
+        })
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   const getSearch = () => {
     fetch(`/api/search?id=${id}`)
       .then((response) => response.json())
@@ -254,19 +274,7 @@ const EquipmentInfo = ({ authentication }) => {
                 <button
                   className="eqbutton"
                   onClick={() => {
-                    try {
-                      fetch(`/api/info/${id}`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                      }).then((response) => {
-                        response.json()
-                        navigation('/')
-                        window.location.reload(true)
-                        console.log(response);
-                      });
-                    } catch (error) {
-                      console.error(error.message);
-                    }
+                    deleteItem(id)
                   }}
                 >
                   Delete Item
@@ -274,7 +282,7 @@ const EquipmentInfo = ({ authentication }) => {
               </>
             )}
 
-        
+
           <button className="eqbutton"
             onClick={toggleModal}
           >
