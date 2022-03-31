@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 
-
-const EquipmentInfo = () => {
+const EquipmentInfo = ({ authentication }) => {
   let { id } = useParams();
   const navigation = useNavigate();
 
@@ -21,8 +20,8 @@ const EquipmentInfo = () => {
 
 
   const toggleModal = () => {
-    setModalStatus(!modalStatus)
-  }
+    setModalStatus(!modalStatus);
+  };
 
   const sendRequest = () => {
     console.log(equipment.id)
@@ -36,7 +35,7 @@ const EquipmentInfo = () => {
         requestor,
         requestDate,
         returnDate,
-        isAccepted
+        isAccepted,
       };
       fetch("/api/requests", {
         method: "POST",
@@ -45,9 +44,9 @@ const EquipmentInfo = () => {
       })
         .then((response) => response.json())
         .then(() => {
-          setModalStatus(false)
-          alert("Request Sent")
-          navigation('/search')
+          setModalStatus(false);
+          alert("Request Sent");
+          navigation("/search");
         });
     } catch (err) {
       console.error(err.message);
@@ -83,10 +82,8 @@ const EquipmentInfo = () => {
   if (!loaded) return null;
 
   return (
-
     <div id="mainBox">
-
-      {modalStatus &&
+      {modalStatus && (
         <Modal
           content={
             <form className={'createForm'} onSubmit={sendRequest}>
@@ -105,23 +102,23 @@ const EquipmentInfo = () => {
 
               <h5>Enter Requested Date:</h5>
               <input
-                type={'date'}
-                id={'requestDate'}
-                className={'requestDate'}
+                type={"date"}
+                id={"requestDate"}
+                className={"requestDate"}
                 value={requestDate}
-                onChange={event => setRequestDate(event.target.value)}
-                placeholder={'Requested Date'}
+                onChange={(event) => setRequestDate(event.target.value)}
+                placeholder={"Requested Date"}
                 required
               />
 
               <h5>Enter Requested Return Date:</h5>
               <input
-                type={'date'}
-                id={'returnDate'}
-                className={'returnDate'}
+                type={"date"}
+                id={"returnDate"}
+                className={"returnDate"}
                 value={returnDate}
-                onChange={event => setReturnDate(event.target.value)}
-                placeholder={'Requested Return Date'}
+                onChange={(event) => setReturnDate(event.target.value)}
+                placeholder={"Requested Return Date"}
                 required
               />
               <br></br>
@@ -130,8 +127,7 @@ const EquipmentInfo = () => {
           }
           handleClose={toggleModal}
         />
-      }
-
+      )}
 
       <img
         className={"camera"}
@@ -226,7 +222,6 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-
           <div id={"boxSeven"}>
             <li className={"one"}>
               <label>
@@ -245,6 +240,39 @@ const EquipmentInfo = () => {
               <p>{equipment.description}</p>
             </li>
           </div>
+          {authentication.status === true &&
+            authentication.user.accountType !== 0 && (
+              <>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    navigation(`/manage/${id}`);
+                  }}
+                >
+                  Edit Item Attributes
+                </button>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    try {
+                      fetch(`/api/info/${id}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                      }).then((response) => {
+                        response.json()
+                        window.location.reload(true)
+                        navigation(`/`);
+                        console.log(response);
+                      });
+                    } catch (error) {
+                      console.error(error.message);
+                    }
+                  }}
+                >
+                  Delete Item
+                </button>
+              </>
+            )}
 
           <button className="eqbutton"
             onClick={() => {
