@@ -12,6 +12,7 @@ const EquipmentInfo = ({ authentication }) => {
   const [loaded, setLoaded] = useState(false);
   const [equipment, setEquipment] = useState();
   const [modalStatus, setModalStatus] = useState(false)
+  const [modal, setModal] = useState(false)
   const [requestor, setRequestor] = useState('')
   const [requestDate, setRequestDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
@@ -22,6 +23,10 @@ const EquipmentInfo = ({ authentication }) => {
   const toggleModal = () => {
     setModalStatus(!modalStatus);
   };
+
+  const toggleHigherModal = () => {
+    setModal(!modal)
+  }
 
   const sendRequest = () => {
     console.log(equipment.id)
@@ -43,15 +48,20 @@ const EquipmentInfo = ({ authentication }) => {
         body: JSON.stringify(body),
       })
         .then((response) => response.json())
-        .then(() => {
-          setModalStatus(false);
-          alert("Request Sent");
-          navigation("/search");
-        });
+        .then(data => {
+          if (data.redirect === true) {
+            alert("Request Sent");
+            setModalStatus(false);
+            setModal(false)
+            setIsAccepted(false)
+            navigation('/search')
+          } else {
+            alert('An Unexpected Error Has Occurred!')
+          }
+        })
     } catch (err) {
       console.error(err.message);
     }
-
 
   }
 
@@ -146,6 +156,43 @@ const EquipmentInfo = ({ authentication }) => {
             </form>
           }
           handleClose={toggleModal}
+        />
+      )}
+
+      {modal && (
+        <Modal
+          content={
+            <form className={'createForm'} onSubmit={sendRequest}>
+              <h3>Request {equipment.name}</h3>
+              <h5>{requestor}</h5>
+
+
+              <h5>Enter Requested Date:</h5>
+              <input
+                type={"date"}
+                id={"requestDate"}
+                className={"requestDate"}
+                value={requestDate}
+                onChange={(event) => setRequestDate(event.target.value)}
+                placeholder={"Requested Date"}
+                required
+              />
+
+              <h5>Enter Requested Return Date:</h5>
+              <input
+                type={"date"}
+                id={"returnDate"}
+                className={"returnDate"}
+                value={returnDate}
+                onChange={(event) => setReturnDate(event.target.value)}
+                placeholder={"Requested Return Date"}
+                required
+              />
+              <br></br>
+              <button type="submit">Send Request</button>
+            </form>
+          }
+          handleClose={toggleHigherModal}
         />
       )}
 
@@ -279,15 +326,28 @@ const EquipmentInfo = ({ authentication }) => {
                 >
                   Delete Item
                 </button>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    setRequestor(authentication.user.email)
+                    setIsAccepted(true)
+                    toggleHigherModal()
+                  }}
+                >
+                  Request Item
+                </button>
+
               </>
             )}
 
-
-          <button className="eqbutton"
-            onClick={toggleModal}
-          >
-            Request This Item
-          </button>
+          {authentication.status === true &&
+            authentication.user.accountType === 0 && (
+              <button className="eqbutton"
+                onClick={toggleModal}
+              >
+                Request Item
+              </button>
+            )}
         </ul>
       </div>
     </div>
