@@ -236,7 +236,7 @@ app.post("/api/requests", async (req, res) => {
         isAccepted,
       ]
     );
-    res.json(newRequest.rows[0]);
+    res.json({ redirect: true });
   } catch (exception) {
     throw new Error(exception.message);
   }
