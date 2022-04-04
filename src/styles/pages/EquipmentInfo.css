@@ -1,5 +1,4 @@
 h3{
-
     text-align: center;
 }
 li{
@@ -14,7 +13,6 @@ p{
    width: auto;
    position: relative;
    left: 72px;
-   
 }
 
 #boxOne{
@@ -98,7 +96,8 @@ p{
     display: flex;
     flex-wrap: wrap;
 }
-button {
+
+.eqbutton {
     background-color: var(--primary);
     color: white;
     text-align: center;

@@ -147,9 +147,16 @@ form {
     outline: none;
 }
 #purchaseDate, #price, #serialNumber, #warrantyExpireDate, 
-#projectNumber, #location, #productCode, #type, #category {
+#location, #type {
     border: none;
     width: 100%;
+    height: 100%;
+    text-align: center;
+    outline: none;
+}
+#projectNumber, #productCode, #category {
+    border: none;
+    width: 80%;
     height: 100%;
     text-align: center;
     outline: none;

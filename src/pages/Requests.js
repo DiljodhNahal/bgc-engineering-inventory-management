@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Button from "../components/Button";
 import Table from "../components/Table";
+import moment from "moment";
 
 const Requests = () => {
 
@@ -21,7 +22,7 @@ const Requests = () => {
             const response = await fetch(
                 `/api/approve/${id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json"}
+                headers: { "Content-Type": "application/json" }
             });
             const jsonData = await response.json();
             if (jsonData.status === 200) {
@@ -32,7 +33,22 @@ const Requests = () => {
         }
     }
 
-    //const 
+    const denyRequest = (id) => {
+        try {
+            fetch(
+                `/api/requests/delete/${id}`,
+                {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(response => {
+                    window.location.reload(true)
+                    console.log(response)
+                })
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     useEffect(() => {
         getRequests();
@@ -54,29 +70,29 @@ const Requests = () => {
                     </thead>
 
                     <tbody>
-                            {requests.map((request) => (request.isAccepted === true) ? (
-                                null
-                            ) :
-                                <tr key={request.id}>
-                                    <td>{request.name}{request.isAccepted}</td>
-                                    <td>{request.requestor}</td>
-                                    <td>{request.requestDate}</td>
-                                    <td>{request.returnDate}</td>
-                                    <td>
-                                        <Button size={'small'} onClick={() => approveRequest(request.id)}>
-                                            Approve
-                                        </Button>
-                                    </td>
-                                    <td>
-                                        <Button size={'small'} onClick={() => {
-                                            
-                                        }}>
-                                            Deny
-                                        </Button>
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
+                        {requests.map((request) => (request.isAccepted === true) ? (
+                            null
+                        ) :
+                            <tr key={request.id}>
+                                <td>{request.name}</td>
+                                <td>{request.requestor}</td>
+                                <td>{moment.utc(request.requestDate).format("YYYY-MM-DD")}</td>
+                                <td>{moment.utc(request.returnDate).format("YYYY-MM-DD")}</td>
+                                <td>
+                                    <Button size={'small'} onClick={() => approveRequest(request.id)}>
+                                        Approve
+                                    </Button>
+                                </td>
+                                <td>
+                                    <Button size={'small'} onClick={() => {
+                                        denyRequest(request.id)
+                                    }}>
+                                        Deny
+                                    </Button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
                 </React.Fragment>
             }
         ></Table>
