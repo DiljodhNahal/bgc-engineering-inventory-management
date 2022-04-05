@@ -164,7 +164,17 @@ const EquipmentInfo = ({ authentication }) => {
           content={
             <form className={'createForm'} onSubmit={sendRequest}>
               <h3>Request {equipment.name}</h3>
-              <h5>{requestor}</h5>
+              <h5>Enter Employee Name:</h5>
+              <select
+                value={requestor}
+                onChange={event => setRequestor(event.target.value)}
+              >
+                {users.map((user) => (user.accountType === 0 || 1 || 2) ? (
+                  <option key={user.id}>{user.email}</option>
+                ) :
+                  null)}
+
+              </select>
 
 
               <h5>Enter Requested Date:</h5>
