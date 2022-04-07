@@ -52,7 +52,6 @@ const DeleteAnnounce = () => {
             <tbody>
             {announcements.map((announcement) =>(
                 <tr key={announcement.id}>
-                    <td></td>
                     <td>{announcement.announcement}</td>
                     <td>
                         <button onClick={() => {
