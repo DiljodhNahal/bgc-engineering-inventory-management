@@ -29,6 +29,7 @@ const Layout = () => {
                 } else{
                     reactLocalStorage.set('adminEmail', data.user.email);
                     reactLocalStorage.set('adminID', data.user.id);
+                    reactLocalStorage.set('accountType', data.user.accountType)
                 }
             })
             .then(() => {
