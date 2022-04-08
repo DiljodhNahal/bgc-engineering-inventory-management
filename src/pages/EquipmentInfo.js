@@ -18,7 +18,15 @@ const EquipmentInfo = ({ authentication }) => {
   const [returnDate, setReturnDate] = useState('')
   const [isAccepted, setIsAccepted] = useState(false)
   const [users, setUsers] = useState([]);
+  const [token, setToken] = useState(null)
 
+  useEffect(() => {
+    fetch('/api/google-key')
+        .then(response => response.json())
+        .then(data => {
+          setToken(data.key)
+        })
+  }, [])
 
   const toggleModal = () => {
     setModalStatus(!modalStatus);
@@ -29,7 +37,6 @@ const EquipmentInfo = ({ authentication }) => {
   }
 
   const sendRequest = () => {
-    console.log(equipment.id)
     let name = equipment.name
     let itemId = equipment.id
 
@@ -208,7 +215,7 @@ const EquipmentInfo = ({ authentication }) => {
 
       <img
         className={"camera"}
-        src="https://cdn.thewirecutter.com/wp-content/media/2020/10/beginnerdslr2020-2048px-9793.jpg?auto=webp&quality=60&crop=1.91:1&width=1200"
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${equipment.location}&zoom=16&size=600x300&maptype=roadmap&key=${token}`}
         alt="Display"
       />
 

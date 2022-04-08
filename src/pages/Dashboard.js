@@ -20,11 +20,11 @@ const Dashboard = () => {
                 <div className={'btn-group'}>
                     <Button onClick={() => navigation('/signup')}>Create Users</Button>
                     <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
-                    <Button onClick={() => navigation('/announcements')}>New Announcements</Button>
+                    <Button onClick={() => navigation('/locations')}>Manage Locations</Button>
                 </div>
                 <div className={'btn-group'}>
-                <Button onClick={() => navigation('/announcement')}>Manage Announcements</Button>
-                    
+                    <Button onClick={() => navigation('/announcements')}>New Announcements</Button>
+                    <Button onClick={() => navigation('/announcement')}>Manage Announcements</Button>
                 </div>
 
             </div>

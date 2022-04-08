@@ -7,6 +7,7 @@ const SearchBar = ({ onChange }) => {
     return (
 
         <input
+            id={'searchBar'}
             type={'text'}
             name={'search'}
             className={'searchBar'}

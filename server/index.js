@@ -484,6 +484,13 @@ app.post("/api/announcements/delete/:id", async (req, res) => {
   }
 })
 
+app.get("/api/google-key", async (req, res) => {
+
+  if (req.isAuthenticated()) {
+    res.status(200).send({key: process.env.API_KEY})
+  }
+
+})
 
 const buildPath = path.join(__dirname, "..", "build");
 app.use(express.static(buildPath));
@@ -492,8 +499,10 @@ app.get("*", function (req, res) {
 });
 
 // Global Error Handling
-app.use(function (err, req, res, next) {
+app.use(function (err, res, req, next) {
   res.status(500).send(err.message);
 });
 
 app.listen(PORT, () => console.log(`Express Server Is Now Running On ${PORT}`));
+
+module.exports = app
