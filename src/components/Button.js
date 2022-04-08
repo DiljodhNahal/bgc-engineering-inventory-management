@@ -13,6 +13,9 @@ const Button = ({ children, onClick, size, loading = false }) => {
       case "small":
         sizeClass = "button-sm";
         break;
+      case 'xs':
+        sizeClass = "button-xs";
+        break;
     }
   }
 

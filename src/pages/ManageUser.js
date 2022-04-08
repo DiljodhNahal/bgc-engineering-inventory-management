@@ -66,7 +66,8 @@ const ManageUser = () => {
         }
     }
 
-    const toUpdate = () => {
+    const toUpdate = (e) => {
+        e.preventDefault();
         setLoading(true)
         try {
             if (password !== confirmPassword) {
@@ -196,7 +197,7 @@ const ManageUser = () => {
             {modalUpdate &&
                 <Modal
                     content={
-                        <form className={'createForm'}>
+                        <form className={'createForm'} onSubmit={e => e.preventDefault()}>
                             <h3>Update Account Information</h3>
                             <input
                                 type={'email'}
@@ -270,22 +271,22 @@ const ManageUser = () => {
                                     <td>{user.accountType === 0 ? 'Employee' : 'Equipment Manager'}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <button onClick={() => {
+                                        <Button size={'xs'} onClick={() => {
                                             setID(user.id)
                                             setAccountType(user.accountType)
                                             setEmail(user.email)
                                             toggleUpdateModal()
                                         }}>
                                             Update
-                                        </button>
+                                        </Button>
                                     </td>
                                     <td>
-                                        <button onClick={() => {
+                                        <Button size={'xs'} onClick={() => {
                                             setID(user.id)
                                             toggleDeleteModal()
                                         }}>
                                             Delete
-                                        </button>
+                                        </Button>
                                     </td>
                                 </tr>
                             )}

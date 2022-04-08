@@ -21,6 +21,12 @@
     width: 12vw;
 }
 
+
+.button-xs {
+    height: 1vh;
+    width: 4vw;
+}
+
 .button-sm {
     height: 3vh;
     width: 8vw;

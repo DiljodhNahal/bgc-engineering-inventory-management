@@ -53,7 +53,7 @@ const DeleteAnnounce = () => {
                 <tr key={announcement.id}>
                     <td>{announcement.announcement}</td>
                     <td>
-                        <Button size={"small"} onClick={() => {
+                        <Button size={'xs'} onClick={() => {
                         toDelete(announcement.id)}}>
                         
                         Delete
