@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../styles/pages/Home.css'
+import Button from '../components/Button'
 import Table from '../components/Table';
 
 
@@ -8,7 +9,6 @@ const DeleteAnnounce = () => {
     const [announcements, setAnnouncement] = useState([]);
    
     const toDelete = (id) => {
-        
         try {
             fetch(
                 `/api/announcements/delete/${id}`,
@@ -18,7 +18,6 @@ const DeleteAnnounce = () => {
                 })
                 .then(response => {
                     window.location.reload(true)
-                    console.log(response)
                 })
         } catch (exception) {
             console.error(exception.message)
@@ -54,11 +53,11 @@ const DeleteAnnounce = () => {
                 <tr key={announcement.id}>
                     <td>{announcement.announcement}</td>
                     <td>
-                        <button onClick={() => {
+                        <Button size={"small"} onClick={() => {
                         toDelete(announcement.id)}}>
                         
                         Delete
-                        </button>
+                        </Button>
                     </td>
                 </tr>
                 ))}   

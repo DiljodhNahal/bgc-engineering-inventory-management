@@ -213,159 +213,161 @@ const EquipmentInfo = ({ authentication }) => {
         />
       )}
 
-      <img
-        className={"camera"}
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${equipment.location}&zoom=16&size=600x300&maptype=roadmap&key=${token}`}
-        alt="Display"
-      />
+      <div style={{display: 'flex'}}>
+        <img
+            className={"camera"}
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${equipment.location}&zoom=16&size=600x300&maptype=roadmap&key=${token}`}
+            alt="Display"
+        />
 
-      <div className={"group"}>
-        <ul>
-          <h3>{equipment.name}</h3>
-          <div id={"boxOne"}>
-            <li className={"one"}>
-              <label>
-                <strong>Color:</strong>
-              </label>{" "}
-              {equipment.color}
-            </li>
-            <li className={"two"} id={"serial"}>
-              <label>
-                <strong>Serial Number:</strong>
-              </label>{" "}
-              {equipment.serialNumber}
-            </li>
-          </div>
+        <div className={"group"}>
+          <ul>
+            <h3>{equipment.name}</h3>
+            <div id={"boxOne"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Color:</strong>
+                </label>{" "}
+                {equipment.color}
+              </li>
+              <li className={"two"} id={"serial"}>
+                <label>
+                  <strong>Serial Number:</strong>
+                </label>{" "}
+                {equipment.serialNumber}
+              </li>
+            </div>
 
-          <div id={"boxTwo"}>
-            <li className={"one"}>
-              <label>
-                <strong>Price:</strong>
-              </label>{" "}
-              {equipment.price === null ? "" : "$" + equipment.price}
-            </li>
-            <li className={"two"}>
-              <label>
-                <strong>Purchase Date:</strong>
-              </label>{" "}
-              {moment.utc(equipment.purchaseDate).format("YYYY-MM-DD")}
-            </li>
-          </div>
+            <div id={"boxTwo"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Price:</strong>
+                </label>{" "}
+                {equipment.price === null ? "" : "$" + equipment.price}
+              </li>
+              <li className={"two"}>
+                <label>
+                  <strong>Purchase Date:</strong>
+                </label>{" "}
+                {moment.utc(equipment.purchaseDate).format("YYYY-MM-DD")}
+              </li>
+            </div>
 
-          <div id={"boxFour"}>
-            <li className={"one"}>
-              <label>
-                <strong>Item Type:</strong>
-              </label>{" "}
-              {equipment.type}
-            </li>
-            <li className={"two"} id={"category"}>
-              <label>
-                <strong>Category:</strong>
-              </label>{" "}
-              {equipment.category}
-            </li>
-          </div>
+            <div id={"boxFour"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Item Type:</strong>
+                </label>{" "}
+                {equipment.type}
+              </li>
+              <li className={"two"} id={"category"}>
+                <label>
+                  <strong>Category:</strong>
+                </label>{" "}
+                {equipment.category}
+              </li>
+            </div>
 
-          <div id={"boxFive"}>
-            <li className={"one"}>
-              <label>
-                <strong>Item Status:</strong>
-              </label>{" "}
-              {equipment.status}
-            </li>
-            <li className={"two"} id={"productCode"}>
-              <label>
-                <strong>Product Code:</strong>
-              </label>{" "}
-              {equipment.productCode}
-            </li>
-          </div>
+            <div id={"boxFive"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Item Status:</strong>
+                </label>{" "}
+                {equipment.status}
+              </li>
+              <li className={"two"} id={"productCode"}>
+                <label>
+                  <strong>Product Code:</strong>
+                </label>{" "}
+                {equipment.productCode}
+              </li>
+            </div>
 
-          <div id={"boxSix"}>
-            <li className={"one"}>
-              <label>
-                <strong>Location:</strong>
-              </label>{" "}
-              {equipment.location}
-            </li>
-            <li className={"two"} id={"projectNumber"}>
-              <label>
-                <strong>Project Number:</strong>
-              </label>{" "}
-              {equipment.projectNumber}
-            </li>
-          </div>
+            <div id={"boxSix"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Location:</strong>
+                </label>{" "}
+                {equipment.location}
+              </li>
+              <li className={"two"} id={"projectNumber"}>
+                <label>
+                  <strong>Project Number:</strong>
+                </label>{" "}
+                {equipment.projectNumber}
+              </li>
+            </div>
 
-          <div id={"boxSix"}>
-            <li className={"one"}>
-              <label>
-                <strong>Warranty Expiry:</strong>
-              </label>{" "}
-              {equipment.warrantyExpiryDate}
-            </li>
-          </div>
+            <div id={"boxSix"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Warranty Expiry:</strong>
+                </label>{" "}
+                {equipment.warrantyExpiryDate}
+              </li>
+            </div>
 
-          <div id={"boxSeven"}>
-            <li className={"one"}>
-              <label>
-                <strong>Barcode:</strong>
-              </label>{" "}
-              {equipment.barcode}
-            </li>
-          </div>
+            <div id={"boxSeven"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Barcode:</strong>
+                </label>{" "}
+                {equipment.barcode}
+              </li>
+            </div>
 
-          <div id={"boxThree"}>
-            <li className={"one"}>
-              <label>
-                <strong>Description:</strong>
-              </label>
+            <div id={"boxThree"}>
+              <li className={"one"}>
+                <label>
+                  <strong>Description:</strong>
+                </label>
 
-              <p>{equipment.description}</p>
-            </li>
-          </div>
-          {authentication.status === true &&
+                <p>{equipment.description}</p>
+              </li>
+            </div>
+            {authentication.status === true &&
             authentication.user.accountType !== 0 && (
-              <>
-                <button
-                  className="eqbutton"
-                  onClick={() => {
-                    navigation(`/manage/${id}`);
-                  }}
-                >
-                  Edit Item
-                </button>
-                <button
-                  className="eqbutton"
-                  onClick={() => {
-                    deleteItem(id)
-                  }}
-                >
-                  Delete Item
-                </button>
-                <button
-                  className="eqbutton"
-                  onClick={() => {
-                    setRequestor(authentication.user.email)
-                    setIsAccepted(true)
-                    toggleHigherModal()
-                  }}
+                <>
+                  <button
+                      className="eqbutton"
+                      onClick={() => {
+                        navigation(`/manage/${id}`);
+                      }}
+                  >
+                    Edit Item
+                  </button>
+                  <button
+                      className="eqbutton"
+                      onClick={() => {
+                        deleteItem(id)
+                      }}
+                  >
+                    Delete Item
+                  </button>
+                  <button
+                      className="eqbutton"
+                      onClick={() => {
+                        setRequestor(authentication.user.email)
+                        setIsAccepted(true)
+                        toggleHigherModal()
+                      }}
+                  >
+                    Request Item
+                  </button>
+
+                </>
+            )}
+
+            {authentication.status === true &&
+            authentication.user.accountType === 0 && (
+                <button className="eqbutton"
+                        onClick={toggleModal}
                 >
                   Request Item
                 </button>
-
-              </>
             )}
-
-          {authentication.status === true &&
-            authentication.user.accountType === 0 && (
-              <button className="eqbutton"
-                onClick={toggleModal}
-              >
-                Request Item
-              </button>
-            )}
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   );
