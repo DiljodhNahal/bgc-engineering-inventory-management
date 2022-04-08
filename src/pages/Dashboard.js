@@ -14,17 +14,17 @@ const Dashboard = () => {
             <div className={'btn-container'}>
                 <div className={'btn-group'}>
                     <Button onClick={() => navigation('/create')}>Create Inventory</Button>
-                    <Button onClick={() => navigation("/list")}>Manage Inventory</Button>
                     <Button onClick={() => navigation('/requests')}>Pending Requests</Button>
+                    <Button onClick={() => navigation('/signedoutitems')}>Signed Out Items</Button>
                 </div>
                 <div className={'btn-group'}>
-                    <Button onClick={() => navigation('/signedoutitems')}>Signed Out Items</Button>
                     <Button onClick={() => navigation('/signup')}>Create Users</Button>
                     <Button onClick={() => navigation('/manageuser')}>Manage Users</Button>
+                    <Button onClick={() => navigation('/locations')}>Manage Locations</Button>
                 </div>
                 <div className={'btn-group'}>
-                    
-                    
+                    <Button onClick={() => navigation('/announcements')}>New Announcements</Button>
+                    <Button onClick={() => navigation('/announcement')}>Manage Announcements</Button>
                 </div>
 
             </div>

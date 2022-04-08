@@ -4,31 +4,42 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
-import { reactLocalStorage } from 'reactjs-localstorage'
 
-const EquipmentInfo = () => {
+const EquipmentInfo = ({ authentication }) => {
   let { id } = useParams();
   const navigation = useNavigate();
 
   const [loaded, setLoaded] = useState(false);
   const [equipment, setEquipment] = useState();
   const [modalStatus, setModalStatus] = useState(false)
+  const [modal, setModal] = useState(false)
   const [requestor, setRequestor] = useState('')
   const [requestDate, setRequestDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
   const [isAccepted, setIsAccepted] = useState(false)
-  
+  const [users, setUsers] = useState([]);
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/google-key')
+        .then(response => response.json())
+        .then(data => {
+          setToken(data.key)
+        })
+  }, [])
 
   const toggleModal = () => {
-    setModalStatus(!modalStatus)
+    setModalStatus(!modalStatus);
+  };
+
+  const toggleHigherModal = () => {
+    setModal(!modal)
   }
 
   const sendRequest = () => {
-    console.log(equipment.id)
     let name = equipment.name
     let itemId = equipment.id
-  
+
     try {
       const body = {
         itemId,
@@ -36,7 +47,7 @@ const EquipmentInfo = () => {
         requestor,
         requestDate,
         returnDate,
-        isAccepted
+        isAccepted,
       };
       fetch("/api/requests", {
         method: "POST",
@@ -44,84 +55,167 @@ const EquipmentInfo = () => {
         body: JSON.stringify(body),
       })
         .then((response) => response.json())
-        .then(() => {
-          setModalStatus(false)
-          alert("Request Sent")
-          navigation('/search')
-        });
+        .then(data => {
+          if (data.redirect === true) {
+            alert("Request Sent");
+            setModalStatus(false);
+            setModal(false)
+            setIsAccepted(false)
+            navigation('/search')
+          } else {
+            alert('An Unexpected Error Has Occurred!')
+          }
+        })
     } catch (err) {
       console.error(err.message);
     }
 
-      
   }
 
+  const getUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      const jsonData = await response.json();
+      setUsers(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
+  const deleteItem = (id) => {
 
-  useEffect(() => {
+    try {
+      fetch(`/api/info/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.redirect === true) {
+            navigation('/')
+          } else {
+            alert('An Unexpected Error Has Occurred!')
+          }
+        })
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const getSearch = () => {
     fetch(`/api/search?id=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setEquipment(data.results[0]);
         setLoaded(true);
       });
+  }
+
+  useEffect(() => {
+    getSearch();
+    getUsers();
   }, []);
 
   if (!loaded) return null;
 
   return (
-
     <div id="mainBox">
-
-      {modalStatus &&
+      {modalStatus && (
         <Modal
           content={
-            <form className={'createForm'}>
+            <form className={'createForm'} onSubmit={sendRequest}>
               <h3>Request {equipment.name}</h3>
               <h5>Enter Employee Name:</h5>
-              <input
-                type={'text'}
-                className={'requesting-employee'}
-                id={'requesting-employee'}
+              <select
                 value={requestor}
                 onChange={event => setRequestor(event.target.value)}
-                placeholder={'Enter Employee Name'}
-                required
-              />
+              >
+                {users.map((user) => (user.accountType === 0) ? (
+                  <option key={user.id}>{user.email}</option>
+                ) :
+                  null)}
+
+              </select>
 
               <h5>Enter Requested Date:</h5>
               <input
-                type={'date'}
-                id={'requestDate'}
-                className={'requestDate'}
+                type={"date"}
+                id={"requestDate"}
+                className={"requestDate"}
                 value={requestDate}
-                onChange={event => setRequestDate(event.target.value)}
-                placeholder={'Requested Date'}
+                onChange={(event) => setRequestDate(event.target.value)}
+                placeholder={"Requested Date"}
                 required
               />
 
               <h5>Enter Requested Return Date:</h5>
               <input
-                type={'date'}
-                id={'returnDate'}
-                className={'returnDate'}
+                type={"date"}
+                id={"returnDate"}
+                className={"returnDate"}
                 value={returnDate}
-                onChange={event => setReturnDate(event.target.value)}
-                placeholder={'Requested Return Date'}
+                onChange={(event) => setReturnDate(event.target.value)}
+                placeholder={"Requested Return Date"}
                 required
               />
               <br></br>
-              <Button onClick={sendRequest} size={'small'} >Send Request</Button>
+              <button type="submit">Send Request</button>
             </form>
           }
           handleClose={toggleModal}
         />
-      }
+      )}
 
+      {modal && (
+        <Modal
+          content={
+            <form className={'createForm'} onSubmit={sendRequest}>
+              <h3>Request {equipment.name}</h3>
+              <h5>Enter Employee Name:</h5>
+              <select
+                value={requestor}
+                onChange={event => setRequestor(event.target.value)}
+              >
+                {users.map((user) => (user.accountType === 0 || 1 || 2) ? (
+                  <option key={user.id}>{user.email}</option>
+                ) :
+                  null)}
+
+              </select>
+
+
+              <h5>Enter Requested Date:</h5>
+              <input
+                type={"date"}
+                id={"requestDate"}
+                className={"requestDate"}
+                value={requestDate}
+                onChange={(event) => setRequestDate(event.target.value)}
+                placeholder={"Requested Date"}
+                required
+              />
+
+              <h5>Enter Requested Return Date:</h5>
+              <input
+                type={"date"}
+                id={"returnDate"}
+                className={"returnDate"}
+                value={returnDate}
+                onChange={(event) => setReturnDate(event.target.value)}
+                placeholder={"Requested Return Date"}
+                required
+              />
+              <br></br>
+              <button type="submit">Send Request</button>
+            </form>
+          }
+          handleClose={toggleHigherModal}
+        />
+      )}
 
       <img
         className={"camera"}
-        src="https://cdn.thewirecutter.com/wp-content/media/2020/10/beginnerdslr2020-2048px-9793.jpg?auto=webp&quality=60&crop=1.91:1&width=1200"
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${equipment.location}&zoom=16&size=600x300&maptype=roadmap&key=${token}`}
         alt="Display"
       />
 
@@ -159,13 +253,13 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxFour"}>
-          <li className={"one"}>
+            <li className={"one"}>
               <label>
                 <strong>Item Type:</strong>
               </label>{" "}
               {equipment.type}
             </li>
-            <li className={"two"}id={"category"}>
+            <li className={"two"} id={"category"}>
               <label>
                 <strong>Category:</strong>
               </label>{" "}
@@ -174,20 +268,20 @@ const EquipmentInfo = () => {
           </div>
 
           <div id={"boxFive"}>
-          <li className={"one"}>
+            <li className={"one"}>
               <label>
                 <strong>Item Status:</strong>
               </label>{" "}
               {equipment.status}
             </li>
-            <li className={"two"}id={"productCode"}>
+            <li className={"two"} id={"productCode"}>
               <label>
                 <strong>Product Code:</strong>
               </label>{" "}
               {equipment.productCode}
             </li>
           </div>
-          
+
           <div id={"boxSix"}>
             <li className={"one"}>
               <label>
@@ -195,7 +289,7 @@ const EquipmentInfo = () => {
               </label>{" "}
               {equipment.location}
             </li>
-            <li className={"two"}id={"projectNumber"}>
+            <li className={"two"} id={"projectNumber"}>
               <label>
                 <strong>Project Number:</strong>
               </label>{" "}
@@ -212,7 +306,6 @@ const EquipmentInfo = () => {
             </li>
           </div>
 
-          
           <div id={"boxSeven"}>
             <li className={"one"}>
               <label>
@@ -231,19 +324,47 @@ const EquipmentInfo = () => {
               <p>{equipment.description}</p>
             </li>
           </div>
+          {authentication.status === true &&
+            authentication.user.accountType !== 0 && (
+              <>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    navigation(`/manage/${id}`);
+                  }}
+                >
+                  Edit Item
+                </button>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    deleteItem(id)
+                  }}
+                >
+                  Delete Item
+                </button>
+                <button
+                  className="eqbutton"
+                  onClick={() => {
+                    setRequestor(authentication.user.email)
+                    setIsAccepted(true)
+                    toggleHigherModal()
+                  }}
+                >
+                  Request Item
+                </button>
 
-          <button
-            onClick={() => {
-              navigation(`/manage/${id}`);
-            }}
-          >
-            Edit Item Attributes
-          </button>
-          <button
-            onClick={toggleModal}
-          >
-            Request This Item
-          </button>
+              </>
+            )}
+
+          {authentication.status === true &&
+            authentication.user.accountType === 0 && (
+              <button className="eqbutton"
+                onClick={toggleModal}
+              >
+                Request Item
+              </button>
+            )}
         </ul>
       </div>
     </div>

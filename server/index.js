@@ -170,7 +170,7 @@ app.get(
       let response = {
         status: req.isAuthenticated(),
       };
-      if (req.isAuthenticated()){
+      if (req.isAuthenticated()) {
         response.user = req.user;
       }
 
@@ -179,7 +179,7 @@ app.get(
     catch (error) {
       console.log(error)
     }
-       
+
 
 
   }));
@@ -236,19 +236,19 @@ app.post("/api/requests", async (req, res) => {
         isAccepted,
       ]
     );
-    res.json(newRequest.rows[0]);
+    res.json({ redirect: true });
   } catch (exception) {
     throw new Error(exception.message);
   }
 });
 
-app.post('/api/approve/:id', async (req,res) =>{
+app.post('/api/approve/:id', async (req, res) => {
   try {
-    
-    pool.query('UPDATE requests SET "isAccepted"=TRUE WHERE id=$1 RETURNING *',[req.params.id], (error,result) =>{
-      res.json({message:`Request with ID ${req.params.id} approved`, status:200})
+
+    pool.query('UPDATE requests SET "isAccepted"=TRUE WHERE id=$1 RETURNING *', [req.params.id], (error, result) => {
+      res.json({ message: `Request with ID ${req.params.id} approved`, status: 200 })
     });
-    
+
   } catch (error) {
     console.error(error);
   }
@@ -262,6 +262,40 @@ app.post("/api/requests/delete/:id", async (req, res) => {
     throw new Error(exception.message);
   }
 })
+
+app.post("/api/signedout/return/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM requests WHERE id=$1", [req.params.id])
+    res.status(204).send('Item Returned');
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+app.post("/api/signedout/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      requestor,
+      requestDate,
+      returnDate,
+    } = req.body;
+    const editedItem = await pool.query(
+      'UPDATE requests SET requestor =$1, "requestDate" =$2, "returnDate" =$3 WHERE id =$4',
+      [
+        requestor,
+        requestDate,
+        returnDate,
+        id,
+      ]
+    )
+
+
+    res.json(editedItem.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 
 app.get("/items", async (req, res) => {
@@ -397,7 +431,7 @@ app.post("/info/:id", async (req, res) => {
         id,
       ]
     )
-    
+
 
     res.json(updatedItem.rows[0]);
   } catch (err) {
@@ -411,10 +445,52 @@ app.post("/api/info/:id", async (req, res) => {
     await pool.query("DELETE FROM equipment WHERE id = $1", [
       id
     ]);
+    res.json({ redirect: true });
   } catch (err) {
     console.log(err.message);
   }
 });
+
+app.post("/api/announce", async (req, res) => {
+  try {
+    const {announcement} = req.body;
+    const newAnnouncement = await pool.query(
+      'INSERT INTO announcements(announcement) VALUES($1) RETURNING *',
+      [
+        announcement
+      ]
+    )
+    res.json(newAnnouncement.rows[0]);
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+});
+
+app.get("/api/announcements", async (req, res) => {
+  try {
+    const allAnnouncements = await pool.query("SELECT * FROM announcements");
+    res.json(allAnnouncements.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.post("/api/announcements/delete/:id", async (req, res) => {
+  try {
+    pool.query("DELETE FROM announcements WHERE id=$1", [req.params.id])
+    res.status(204).send('Announcement Deleted');
+  } catch (exception) {
+    throw new Error(exception.message);
+  }
+})
+
+app.get("/api/google-key", async (req, res) => {
+
+  if (req.isAuthenticated()) {
+    res.status(200).send({key: process.env.API_KEY})
+  }
+
+})
 
 const buildPath = path.join(__dirname, "..", "build");
 app.use(express.static(buildPath));
@@ -423,8 +499,10 @@ app.get("*", function (req, res) {
 });
 
 // Global Error Handling
-app.use(function (err, req, res, next) {
+app.use(function (err, res, req, next) {
   res.status(500).send(err.message);
 });
 
 app.listen(PORT, () => console.log(`Express Server Is Now Running On ${PORT}`));
+
+module.exports = app
